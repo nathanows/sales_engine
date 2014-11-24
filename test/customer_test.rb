@@ -4,7 +4,7 @@ require_relative '../lib/customer'
 class CustomerTest < Minitest::Test
 
   def test_a_customer_has_attributes
-    data = {:id => 1,
+    data = {:id         => 1,
             :first_name => 'Joey',
             :last_name  => 'Ondricka',
             :created_at => '2012-03-27 14:54:09 UTC',
