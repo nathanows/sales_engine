@@ -14,7 +14,7 @@
       <img src="./assets/0.8.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2014-11-24T15:00:02-07:00">2014-11-24T15:00:02-07:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2014-11-24T16:24:14-07:00">2014-11-24T16:24:14-07:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -31,9 +31,9 @@
   </h2>
   <a name="AllFiles"></a>
   <div>
-    <b>3</b> files in total.
-    <b>27</b> relevant lines. 
-    <span class="green"><b>27</b> lines covered</span> and
+    <b>5</b> files in total.
+    <b>50</b> relevant lines. 
+    <span class="green"><b>50</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -51,7 +51,7 @@
     <tbody>
       
       <tr>
-        <td class="strong"><a href="#691e892e6e25a70ae601be6b4142de3ac18316a9" class="src_link" title="lib/customer.rb">lib/customer.rb</a></td>
+        <td class="strong"><a href="#4691d70c35de1de8e3cd60f3d48cda0affeb68f1" class="src_link" title="lib/customer.rb">lib/customer.rb</a></td>
         <td class="green strong">100.0 %</td>
         <td>20</td>
         <td>10</td>
@@ -61,7 +61,17 @@
       </tr>
       
       <tr>
-        <td class="strong"><a href="#2233264fd280a67ee3af269ed4d3314af3f65d19" class="src_link" title="lib/merchant.rb">lib/merchant.rb</a></td>
+        <td class="strong"><a href="#bf8bb7644a5a1d83f800422f104e1904ebc66e4c" class="src_link" title="lib/invoice_item.rb">lib/invoice_item.rb</a></td>
+        <td class="green strong">100.0 %</td>
+        <td>19</td>
+        <td>10</td>
+        <td>10</td>
+        <td>0</td>
+        <td>1.0</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#0f91b964e599f8732524201b49d71a4e07ca2725" class="src_link" title="lib/merchant.rb">lib/merchant.rb</a></td>
         <td class="green strong">100.0 %</td>
         <td>13</td>
         <td>7</td>
@@ -71,7 +81,17 @@
       </tr>
       
       <tr>
-        <td class="strong"><a href="#ce6bb7a6bed9988c4a9a5b670338cf5880c7b5ff" class="src_link" title="test/merchant_test.rb">test/merchant_test.rb</a></td>
+        <td class="strong"><a href="#edcf3107f49cf0c6a7832e80fd1744b8626e62b3" class="src_link" title="test/invoice_item_test.rb">test/invoice_item_test.rb</a></td>
+        <td class="green strong">100.0 %</td>
+        <td>27</td>
+        <td>13</td>
+        <td>13</td>
+        <td>0</td>
+        <td>1.0</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#a2d71aae643c9238b4aef4261a08b1b84fe54a1c" class="src_link" title="test/merchant_test.rb">test/merchant_test.rb</a></td>
         <td class="green strong">100.0 %</td>
         <td>21</td>
         <td>10</td>
@@ -96,7 +116,7 @@
     
       <div class="source_files">
       
-        <div class="source_table" id="691e892e6e25a70ae601be6b4142de3ac18316a9">
+        <div class="source_table" id="4691d70c35de1de8e3cd60f3d48cda0affeb68f1">
   <div class="header">
     <h3>lib/customer.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
@@ -234,7 +254,139 @@
   </pre>
 </div>
       
-        <div class="source_table" id="2233264fd280a67ee3af269ed4d3314af3f65d19">
+        <div class="source_table" id="bf8bb7644a5a1d83f800422f104e1904ebc66e4c">
+  <div class="header">
+    <h3>lib/invoice_item.rb</h3>
+    <h4><span class="green">100.0 %</span> covered</h4>
+    <div>
+      <b>10</b> relevant lines. 
+      <span class="green"><b>10</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        <li class="covered" data-hits="1" data-linenumber="1">
+          <span class="hits">1</span>
+          
+          <code class="ruby">class InvoiceItem</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="2">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  attr_reader :id,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="3">
+          
+          
+          <code class="ruby">              :item_id,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="4">
+          
+          
+          <code class="ruby">              :invoice_id,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="5">
+          
+          
+          <code class="ruby">              :quantity,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="6">
+          
+          
+          <code class="ruby">              :unit_price,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="7">
+          
+          
+          <code class="ruby">              :created_at,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="8">
+          
+          
+          <code class="ruby">              :updated_at</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="9">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="10">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def initialize(data)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="11">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @id          = data[:id]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="12">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @item_id     = data[:item_id]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="13">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @invoice_id  = data[:invoice_id]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="14">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @quantity    = data[:quantity]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="15">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @unit_price  = data[:unit_price]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="16">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @created_at  = data[:created_at]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="17">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @updated_at  = data[:updated_at]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="18">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="19">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+      
+        <div class="source_table" id="0f91b964e599f8732524201b49d71a4e07ca2725">
   <div class="header">
     <h3>lib/merchant.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
@@ -330,7 +482,187 @@
   </pre>
 </div>
       
-        <div class="source_table" id="ce6bb7a6bed9988c4a9a5b670338cf5880c7b5ff">
+        <div class="source_table" id="edcf3107f49cf0c6a7832e80fd1744b8626e62b3">
+  <div class="header">
+    <h3>test/invoice_item_test.rb</h3>
+    <h4><span class="green">100.0 %</span> covered</h4>
+    <div>
+      <b>13</b> relevant lines. 
+      <span class="green"><b>13</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        <li class="covered" data-hits="1" data-linenumber="1">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;test_helper&#39;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="2">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../lib/invoice_item&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="3">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="4">
+          <span class="hits">1</span>
+          
+          <code class="ruby">class InvoiceItemTest &lt; Minitest::Test</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="5">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def test_it_has_invoice_item_attributes</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="6">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    data = {:id =&gt; 1,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="7">
+          
+          
+          <code class="ruby">            :item_id =&gt; 539,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="8">
+          
+          
+          <code class="ruby">            :invoice_id  =&gt; 1,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="9">
+          
+          
+          <code class="ruby">            :quantity =&gt; 5,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="10">
+          
+          
+          <code class="ruby">            :unit_price =&gt; 13635,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="11">
+          
+          
+          <code class="ruby">            :created_at =&gt; &#39;2012-03-27 14:54:09 UTC&#39;,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="12">
+          
+          
+          <code class="ruby">            :updated_at =&gt; &#39;2012-03-27 14:54:09 UTC&#39;,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="13">
+          
+          
+          <code class="ruby">           }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="14">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="15">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    invoice_item = InvoiceItem.new(data)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="16">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="17">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal 1, invoice_item.id</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="18">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal 539, invoice_item.item_id</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="19">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal 1, invoice_item.invoice_id</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="20">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal 5, invoice_item.quantity</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="21">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal 13635, invoice_item.unit_price</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="22">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal &#39;2012-03-27 14:54:09 UTC&#39;, invoice_item.created_at</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="23">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal &#39;2012-03-27 14:54:09 UTC&#39;, invoice_item.updated_at</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="24">
+          
+          
+          <code class="ruby">    # assert_instance_of Date, invoice_item.created_at</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="25">
+          
+          
+          <code class="ruby">    # assert_instance_of Date, invoice_item.updated_at</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="26">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="27">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+      
+        <div class="source_table" id="a2d71aae643c9238b4aef4261a08b1b84fe54a1c">
   <div class="header">
     <h3>test/merchant_test.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
