@@ -19,21 +19,26 @@ class CSVParser
                    }
 
   def self.parse(filename, filepath=PROD)
-    file_path = get_filepath(filename, filepath)
-    contents = read_in_csv(file_path)
-    csv_rows = csv_to_hash(contents)
-    FILE_REPO_MAP[filename].new(csv_rows)
+    FILE_REPO_MAP[filename].new(csv_rows(filename,filepath))
   end
 
-  def self.get_filepath(filename, filepath=PROD)
-    File.join(filepath, filename)
+  def self.csv_rows(filename, filepath)
+    csv_to_hash(contents(filename, filepath))
+  end
+
+  def self.csv_to_hash(csv_rows)
+    csv_rows.map(&:to_hash)
+  end
+
+  def self.contents(filename, filepath)
+    read_in_csv(get_filepath(filename, filepath))
   end
 
   def self.read_in_csv(file_path)
     CSV.open file_path, headers: true, header_converters: :symbol
   end
-
-  def self.csv_to_hash(csv_rows)
-    csv_rows.map(&:to_hash)
+  
+  def self.get_filepath(filename, filepath=PROD)
+    File.join(filepath, filename)
   end
 end

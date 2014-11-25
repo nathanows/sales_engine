@@ -15,7 +15,7 @@ class CSVParserTest < Minitest::Test
   def test_it_can_load_a_customer_to_the_correct_repository
     new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
     assert_instance_of CustomerRepository, new_obj
-    assert_equal 50, new_obj.data.length
+    assert_equal 51, new_obj.data.length
   end
 
   def test_it_can_load_invoice_items_to_the_correct_repository
