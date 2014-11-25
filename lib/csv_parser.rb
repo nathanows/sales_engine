@@ -37,7 +37,7 @@ class CSVParser
   def self.read_in_csv(file_path)
     CSV.open file_path, headers: true, header_converters: :symbol
   end
-  
+
   def self.get_filepath(filename, filepath=PROD)
     File.join(filepath, filename)
   end
