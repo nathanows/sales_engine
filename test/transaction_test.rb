@@ -18,7 +18,22 @@ class TransactionTest < Minitest::Test
     assert_equal 4654405418249632, transaction.credit_card_number
     assert_equal '', transaction.expiration_date
     assert_equal 'success', transaction.result
-    assert_equal '2012-03-27 14:54:09 UTC', transaction.created_at
-    assert_equal '2012-03-27 14:54:09 UTC', transaction.updated_at
+  end
+
+  def test_that_it_parses_dates
+    data = {:id                 => 1,
+            :invoice_id         => 1,
+            :credit_card_number => 4654405418249632,
+            :expiration_date    => '',
+            :result             => 'success',
+            :created_at => '2012-03-27 14:54:09 UTC',
+            :updated_at => '2012-03-27 14:54:09 UTC'
+                                                      }
+    transaction = Transaction.new(data)
+
+    assert_equal '2012-03-27', transaction.created_at.to_s
+    assert_equal '2012-03-27', transaction.updated_at.to_s
+    assert_instance_of Date, transaction.created_at
+    assert_instance_of Date, transaction.updated_at
   end
 end

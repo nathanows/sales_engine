@@ -7,7 +7,7 @@ class Merchant
   def initialize(data)
     @id         = data[:id]
     @name       = data[:name]
-    @created_at = data[:created_at]
-    @updated_at = data[:updated_at]
+    @created_at = Date.parse(data[:created_at])
+    @updated_at = Date.parse(data[:updated_at])
   end
 end
