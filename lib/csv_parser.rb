@@ -8,7 +8,7 @@ require_relative 'transaction_repository'
 
 class CSVParser
   PROD = './data/'
-  TEST = './fixtures/'
+  TEST = './test/fixtures/'
   FILE_REPO_MAP  = {
                      'customers.csv'     => CustomerRepository,
                      'invoice_items.csv' => InvoiceItemRepository,

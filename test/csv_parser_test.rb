@@ -9,7 +9,7 @@ class CSVParserTest < Minitest::Test
 
   def test_it_can_get_a_full_test_filepath
     filepath = CSVParser.get_filepath('customers.csv', CSVParser::TEST)
-    assert_equal './fixtures/customers.csv', filepath
+    assert_equal './test/fixtures/customers.csv', filepath
   end
 
   def test_it_can_load_a_customer_to_the_correct_repository
