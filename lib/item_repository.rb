@@ -1,6 +1,7 @@
 require_relative 'item'
+require_relative 'repository'
 
-class ItemRepository
+class ItemRepository < Repository
   attr_reader :data
 
   def initialize(entries)

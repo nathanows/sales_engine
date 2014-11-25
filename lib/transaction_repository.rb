@@ -1,6 +1,7 @@
 require_relative 'transaction'
+require_relative 'repository'
 
-class TransactionRepository
+class TransactionRepository < Repository
   attr_reader :data
 
   def initialize(entries)
