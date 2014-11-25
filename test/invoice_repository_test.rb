@@ -26,7 +26,7 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 69, invoice_repo.data[1].merchant_id
   end
 
-  def test_it_initializes_with_attributes
+  def test_it_creates_unique_objects
     data1 = {:id          => 1,
              :customer_id => 1,
              :merchant_id => 26,

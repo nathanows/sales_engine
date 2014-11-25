@@ -29,7 +29,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal 3, invoice_item_repo.data[1].quantity
   end
 
-  def test_it_initializes_entries
+  def test_it_creates_unique_objects
     data1 = {:id         => 1,
              :item_id    => 539,
              :invoice_id => 1,
