@@ -13,9 +13,19 @@ class MerchantTest < Minitest::Test
 
     assert_equal 1, merchant.id
     assert_equal 'Schroeder-Jerde', merchant.name
-    assert_equal '2012-03-27 14:53:59 UTC', merchant.created_at
-    assert_equal '2012-03-27 14:53:59 UTC', merchant.updated_at
-    # assert_instance_of Date, merchant.created_at
-    # assert_instance_of Date, merchant.updated_at
+  end
+
+  def test_that_it_parses_dates
+    data = {:id         => 1,
+            :name       => 'Schroeder-Jerde',
+            :created_at => '2012-03-27 14:53:59 UTC',
+            :updated_at => '2012-03-27 14:53:59 UTC'
+                                                    }
+    merchant = Merchant.new(data)
+
+    assert_equal '2012-03-27', merchant.created_at.to_s
+    assert_equal '2012-03-27', merchant.updated_at.to_s
+    assert_instance_of Date, merchant.created_at
+    assert_instance_of Date, merchant.updated_at
   end
 end
