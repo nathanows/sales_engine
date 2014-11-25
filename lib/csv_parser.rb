@@ -1,0 +1,39 @@
+require 'csv'
+require_relative 'customer_repository'
+require_relative 'invoice_item_repository'
+require_relative 'invoice_repository'
+require_relative 'item_repository'
+require_relative 'merchant_repository'
+require_relative 'transaction_repository'
+
+class CSVParser
+  PROD = './data/'
+  TEST = './test/fixtures/'
+  FILE_REPO_MAP  = {
+                     'customers.csv'     => CustomerRepository,
+                     'invoice_items.csv' => InvoiceItemRepository,
+                     'invoices.csv'      => InvoiceRepository,
+                     'items.csv'         => ItemRepository,
+                     'merchants.csv'     => MerchantRepository,
+                     'transactions.csv'  => TransactionRepository
+                   }
+
+  def self.parse(filename, filepath=PROD)
+    file_path = get_filepath(filename, filepath)
+    contents = read_in_csv(file_path)
+    csv_rows = csv_to_hash(contents)
+    FILE_REPO_MAP[filename].new(csv_rows)
+  end
+
+  def self.get_filepath(filename, filepath=PROD)
+    File.join(filepath, filename)
+  end
+
+  def self.read_in_csv(file_path)
+    CSV.open file_path, headers: true, header_converters: :symbol
+  end
+
+  def self.csv_to_hash(csv_rows)
+    csv_rows.map(&:to_hash)
+  end
+end
