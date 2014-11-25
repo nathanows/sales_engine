@@ -21,4 +21,22 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal 1, merchant_repository.data[0].id
     assert_equal 'Apple', merchant_repository.data[1].name
   end
+
+  def test_that_it_creates_unique_objects
+    data1 = {:id         => 1,
+            :name       => 'Schroeder-Jerde',
+            :created_at => '2012-03-27 14:53:59 UTC',
+            :updated_at => '2012-03-27 14:53:59 UTC'
+                                                    }
+    data2 = {:id         => 2,
+            :name       => 'Apple',
+            :created_at => '2012-03-27 14:53:59 UTC',
+            :updated_at => '2012-03-27 14:53:59 UTC'
+                                                    }
+    entries = [data1,data2]
+    refute_empty entries
+    merchant_repository = MerchantRepository.new(entries)
+
+    refute merchant_repository.data[0].object_id == merchant_repository.data[1].object_id
+  end
 end
