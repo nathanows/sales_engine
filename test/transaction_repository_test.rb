@@ -2,53 +2,133 @@ require_relative 'test_helper'
 require_relative '../lib/transaction_repository'
 
 class TransactionRepositoryTest < Minitest::Test
-  def test_it_initializes_entries
-    data1 = {:id                 => 1,
-            :invoice_id         => 1,
-            :credit_card_number => 4654405418249632,
-            :expiration_date    => '',
-            :result             => 'success',
-            :created_at => '2012-03-27 14:54:09 UTC',
-            :updated_at => '2012-03-27 14:54:09 UTC'
-                                                      }
-    data2 = {:id                 => 2,
-            :invoice_id         => 222,
-            :credit_card_number => 4600005418249632,
-            :expiration_date    => '',
-            :result             => 'failed',
-            :created_at => '2012-03-27 14:54:09 UTC',
-            :updated_at => '2012-03-27 14:54:09 UTC'
-                                                      }
-    entries = [data1,data2]
-    refute_empty entries
-    transaction_repository = TransactionRepository.new(entries)
-
-    assert_equal 2, transaction_repository.data.length
-    assert_equal 'success', transaction_repository.data[0].result
-    assert_equal 222, transaction_repository.data[1].invoice_id
+  def data1
+     {:id                          => 1,
+      :invoice_id                  => 1,
+      :credit_card_number          => 4654405418249632,
+      :credit_card_expiration_date => '',
+      :result                      => 'success',
+      :created_at                  => '2012-03-27 14:54:09 UTC',
+      :updated_at                  => '2012-03-27 14:54:09 UTC'
+                                                }
   end
 
-  def test_that_it_creates_unique_objects
-    data1 = {:id                 => 1,
-            :invoice_id         => 1,
-            :credit_card_number => 4654405418249632,
-            :expiration_date    => '',
-            :result             => 'success',
-            :created_at => '2012-03-27 14:54:09 UTC',
-            :updated_at => '2012-03-27 14:54:09 UTC'
-                                                      }
-    data2 = {:id                 => 2,
-            :invoice_id         => 222,
-            :credit_card_number => 4600005418249632,
-            :expiration_date    => '',
-            :result             => 'failed',
-            :created_at => '2012-03-27 14:54:09 UTC',
-            :updated_at => '2012-03-27 14:54:09 UTC'
-                                                      }
-    entries = [data1,data2]
-    refute_empty entries
-    transaction_repository = TransactionRepository.new(entries)
+  def data2
+     {:id                          => 2,
+      :invoice_id                  => 222,
+      :credit_card_number          => 4600005418249632,
+      :credit_card_expiration_date => '',
+      :result                      => 'failed',
+      :created_at                  => '2012-03-27 14:54:09 UTC',
+      :updated_at                  => '2012-03-27 14:54:09 UTC'
+                                                }
+  end
 
-    refute transaction_repository.data[0].object_id == transaction_repository.data[1].object_id
+  class InitializeTransactionTest < TransactionRepositoryTest
+    def test_it_initializes_entries
+      entries = [data1,data2]
+      refute_empty entries
+      transaction_repository = TransactionRepository.new(entries)
+
+      assert_equal 2, transaction_repository.data.length
+      assert_equal 'success', transaction_repository.data[0].result
+      assert_equal 222, transaction_repository.data[1].invoice_id
+    end
+
+    def test_that_it_creates_unique_objects
+      entries = [data1,data2]
+      refute_empty entries
+      transaction_repository = TransactionRepository.new(entries)
+
+      refute transaction_repository.data[0].object_id == transaction_repository.data[1].object_id
+    end
+  end
+
+  def new_obj
+      CSVParser.parse('transactions.csv', CSVParser::TEST)
+  end
+
+  class FindTransactionTest < TransactionRepositoryTest
+    def test_it_creates_a_valid_object
+      assert_instance_of TransactionRepository, new_obj
+      assert_equal 250, new_obj.data.length
+    end
+
+    def test_it_can_return_first_instance_of_id
+      find_results = new_obj.find_by_id(1)
+      assert_instance_of Transaction, find_results
+      assert_equal 1, find_results.invoice_id
+    end
+
+    def test_it_can_return_all_instances_of_id
+      find_results = new_obj.find_all_by_id(1)
+      assert_equal 1, find_results.length
+    end
+
+    def test_it_can_return_first_instance_of_invoice_id
+      find_results = new_obj.find_by_invoice_id(4)
+      assert_instance_of Transaction, find_results
+      assert_equal 3, find_results.id
+    end
+
+    def test_it_can_return_all_instances_of_invoice_id
+      find_results = new_obj.find_all_by_invoice_id(12)
+      assert_equal 3, find_results.length
+    end
+
+    def test_it_can_return_first_instance_of_credit_card_number
+      find_results = new_obj.find_by_credit_card_number(4763141973880496)
+      assert_instance_of Transaction, find_results
+      assert_equal 17, find_results.id
+    end
+
+    def test_it_can_return_all_instances_of_credit_card_number
+      find_results = new_obj.find_all_by_credit_card_number(4763141973880496)
+      assert_equal 1, find_results.length
+    end
+
+    def test_it_can_return_first_instance_of_credit_card_expiration_date
+      find_results = new_obj.find_by_credit_card_expiration_date("10/14")
+      assert_instance_of Transaction, find_results
+      assert_equal 16, find_results.id
+    end
+
+    def test_it_can_return_all_instances_of_credit_card_expiration_date
+      find_results = new_obj.find_all_by_credit_card_expiration_date("10/14")
+      assert_equal 2, find_results.length
+    end
+
+    def test_it_can_return_first_instance_of_result
+      find_results = new_obj.find_by_result("success")
+      assert_instance_of Transaction, find_results
+      assert_equal 1, find_results.id
+    end
+
+    def test_it_can_return_all_instances_of_result
+      find_results = new_obj.find_all_by_result("failed")
+      assert_equal 39, find_results.length
+    end
+
+    def test_it_can_return_first_instance_of_created_at
+      find_results = new_obj.find_by_created_at("2012-03-27")
+      assert_instance_of Transaction, find_results
+      assert_equal 1, find_results.id
+    end
+
+    def test_it_can_return_all_instances_of_created_at
+      find_results = new_obj.find_all_by_created_at("2012-03-27")
+      assert_equal 250, find_results.length
+    end
+
+    def test_it_can_return_first_instance_of_updated_at
+      find_results = new_obj.find_by_updated_at("2012-03-27")
+      assert_instance_of Transaction, find_results
+      assert_equal 1, find_results.id
+    end
+
+    def test_it_can_return_all_instances_of_updated_at
+      find_results = new_obj.find_all_by_updated_at("2012-03-27")
+      assert_equal 250, find_results.length
+    end
   end
 end
