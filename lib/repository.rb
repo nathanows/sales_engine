@@ -8,12 +8,10 @@ class Repository
   end
 
   def find_by(criteria)
-    attribute, search_criteria = criteria.first
-    @data.find { |record| record.send(attribute) == search_criteria }
+    @data.find { |record| record.send(criteria) == criteria }
   end
 
-  def find_by_all
-    attribute, search_criteria = criteria.first
-    @data.find_all { |record| record.send(attribute) == search_criteria }
+  def find_by_all(criteria)
+    @data.find_all { |record| record.send(criteria) == criteria }
   end
 end
