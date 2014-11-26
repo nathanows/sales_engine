@@ -30,7 +30,7 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_it_can_return_random
-    new_obj = CSVParser.parse('invoice_items.csv', nil,n CSVParser::TEST)
+    new_obj = CSVParser.parse('invoice_items.csv', nil, CSVParser::TEST)
     assert_instance_of InvoiceItemRepository, new_obj
     assert_equal 500, new_obj.data.length
 

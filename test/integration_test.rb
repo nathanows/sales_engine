@@ -13,4 +13,10 @@ class IntegrationTest < Minitest::Test
     merchant = @@sales_engine.merchant_repository.data.first
     assert_equal 59, merchant.invoices.length
   end
+
+  def test_an_invoice_can_have_transactions_returned
+    invoice = @@sales_engine.invoice_repository.data.first
+    assert_equal 1, invoice.transactions.length
+  end
+
 end

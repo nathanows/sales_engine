@@ -4,10 +4,11 @@ require_relative 'finders/merchant_id_finder'
 
 class InvoiceRepository < Repository
   include MerchantIDFinder
-  attr_reader :data
+  attr_reader :data, :sales_engine
 
   def initialize(entries, sales_engine)
-    @data ||= entries.map { |entry| Invoice.new(entry) }
+    @sales_engine = sales_engine
+    @data ||= entries.map { |entry| Invoice.new(entry, self) }
   end
 
   def find_by_customer_id(customer_id)
@@ -24,5 +25,9 @@ class InvoiceRepository < Repository
 
   def find_all_by_status(status)
     find_all_by :status, status
+  end
+
+  def find_transactions_from(id)
+    sales_engine.find_transactions_from_invoice(id)
   end
 end
