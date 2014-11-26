@@ -22,7 +22,7 @@ class MerchantRepositoryTest < Minitest::Test
     def test_it_initializes_entries
       entries = [data1,data2]
       refute_empty entries
-      merchant_repository = MerchantRepository.new(entries)
+      merchant_repository = MerchantRepository.new(entries, nil)
 
       assert_equal 2, merchant_repository.data.length
       assert_equal 1, merchant_repository.data[0].id
@@ -32,17 +32,18 @@ class MerchantRepositoryTest < Minitest::Test
     def test_that_it_creates_unique_objects
       entries = [data1,data2]
       refute_empty entries
-      merchant_repository = MerchantRepository.new(entries)
+      merchant_repository = MerchantRepository.new(entries, nil)
 
       refute merchant_repository.data[0].object_id == merchant_repository.data[1].object_id
     end
   end
 
-  def new_obj
-      CSVParser.parse('merchants.csv', CSVParser::TEST)
-  end
-
   class FindMerchantTest < MerchantRepositoryTest
+    attr_reader :new_obj
+    def setup
+      @new_obj = CSVParser.parse('merchants.csv', nil, CSVParser::TEST)
+    end
+
     def test_it_creates_a_valid_object
       assert_instance_of MerchantRepository, new_obj
       assert_equal 100, new_obj.data.length
@@ -90,6 +91,26 @@ class MerchantRepositoryTest < Minitest::Test
     def test_it_can_return_all_instances_of_updated_at
       find_results = new_obj.find_all_by_updated_at("2012-03-27")
       assert_equal 100, find_results.length
+    end
+  end
+
+  class MerchantDelegationTest < MerchantRepositoryTest
+    attr_reader :merchant_repository, :sales_engine
+
+    def setup
+      entries = [data1,data2]
+      @sales_engine = Minitest::Mock.new
+      @merchant_repository = MerchantRepository.new(entries, @sales_engine)
+    end
+
+    def test_it_has_a_sales_engine
+      assert merchant_repository.sales_engine
+    end
+
+    def test_it_delegates_items_to_sales_engine
+      sales_engine.expect(:find_items_from_merchant, nil, [1])
+      merchant_repository.find_items_from(1)
+      sales_engine.verify
     end
   end
 end

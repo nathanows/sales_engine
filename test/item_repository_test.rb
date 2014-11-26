@@ -28,7 +28,7 @@ class ItemRepositoryTest < Minitest::Test
     def test_it_initializes_entries
       entries = [data1,data2]
       refute_empty entries
-      item_repository = ItemRepository.new(entries)
+      item_repository = ItemRepository.new(entries, nil)
 
       assert_equal 2, item_repository.data.length
       assert_equal 'Item Qui Esse', item_repository.data[0].name
@@ -38,17 +38,19 @@ class ItemRepositoryTest < Minitest::Test
     def test_that_it_creates_unique_objects
       entries = [data1,data2]
       refute_empty entries
-      item_repository = ItemRepository.new(entries)
+      item_repository = ItemRepository.new(entries, nil)
 
       refute item_repository.data[0].object_id == item_repository.data[1].object_id
     end
   end
 
-  def new_obj
-      CSVParser.parse('items.csv', CSVParser::TEST)
-  end
 
   class FindItemTest < ItemRepositoryTest
+    attr_reader :new_obj
+    def setup
+      @new_obj = CSVParser.parse('items.csv', nil, CSVParser::TEST)
+    end
+
     def test_it_creates_a_valid_object
       assert_instance_of ItemRepository, new_obj
       assert_equal 103, new_obj.data.length

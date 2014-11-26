@@ -8,7 +8,7 @@ class InvoiceItemRepository < Repository
   include InvoiceIDFinder
   attr_reader :data
 
-  def initialize(entries)
+  def initialize(entries, sales_engine)
     @data ||= entries.map { |entry| InvoiceItem.new(entry) }
   end
 

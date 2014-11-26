@@ -24,7 +24,7 @@ class CustomerRepositoryTest < Minitest::Test
     def test_it_initializes_entries
       entries = [data1,data2]
       refute_empty entries
-      customer_repo = CustomerRepository.new(entries)
+      customer_repo = CustomerRepository.new(entries, nil)
 
       assert_equal 2, customer_repo.data.length
       assert_equal 'Joey', customer_repo.data[0].first_name
@@ -34,7 +34,7 @@ class CustomerRepositoryTest < Minitest::Test
     def test_that_it_creates_unique_objects
       entries = [data1,data2]
       refute_empty entries
-      customer_repo = CustomerRepository.new(entries)
+      customer_repo = CustomerRepository.new(entries, nil)
 
       refute customer_repo.data[0].object_id == customer_repo.data[1].object_id
     end
@@ -42,7 +42,7 @@ class CustomerRepositoryTest < Minitest::Test
 
   class FindMethodTest < CustomerRepositoryTest
     def test_it_can_return_all
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -50,7 +50,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_all_instances_of_first_name
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -58,7 +58,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_first_instance_of_first_name
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -69,7 +69,7 @@ class CustomerRepositoryTest < Minitest::Test
 
 
     def test_it_can_return_first_instance_of_last_name
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -79,7 +79,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_all_instances_of_last_name
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -87,7 +87,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_first_instance_of_id
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -97,7 +97,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_all_instances_of_id
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -105,7 +105,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_first_instance_of_created_at
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -115,7 +115,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_all_instances_of_created_at
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -124,7 +124,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_first_instance_of_updated_at
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -134,7 +134,7 @@ class CustomerRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_all_instances_of_updated_at
-      new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+      new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
       assert_instance_of CustomerRepository, new_obj
       assert_equal 51, new_obj.data.length
 
@@ -142,6 +142,4 @@ class CustomerRepositoryTest < Minitest::Test
       assert_equal 51, find_results.length
     end
   end
-
-
 end

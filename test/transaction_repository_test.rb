@@ -28,7 +28,7 @@ class TransactionRepositoryTest < Minitest::Test
     def test_it_initializes_entries
       entries = [data1,data2]
       refute_empty entries
-      transaction_repository = TransactionRepository.new(entries)
+      transaction_repository = TransactionRepository.new(entries, nil)
 
       assert_equal 2, transaction_repository.data.length
       assert_equal 'success', transaction_repository.data[0].result
@@ -38,17 +38,20 @@ class TransactionRepositoryTest < Minitest::Test
     def test_that_it_creates_unique_objects
       entries = [data1,data2]
       refute_empty entries
-      transaction_repository = TransactionRepository.new(entries)
+      transaction_repository = TransactionRepository.new(entries, nil)
 
       refute transaction_repository.data[0].object_id == transaction_repository.data[1].object_id
     end
   end
 
-  def new_obj
-      CSVParser.parse('transactions.csv', CSVParser::TEST)
-  end
 
   class FindTransactionTest < TransactionRepositoryTest
+    attr_reader :new_obj
+
+    def setup
+      @new_obj = CSVParser.parse('transactions.csv', nil, CSVParser::TEST)
+    end
+
     def test_it_creates_a_valid_object
       assert_instance_of TransactionRepository, new_obj
       assert_equal 250, new_obj.data.length

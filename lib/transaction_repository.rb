@@ -6,7 +6,7 @@ class TransactionRepository < Repository
   include InvoiceIDFinder
   attr_reader :data
 
-  def initialize(entries)
+  def initialize(entries, sales_engine)
     @data ||= entries.map { |entry| Transaction.new(entry) }
   end
 

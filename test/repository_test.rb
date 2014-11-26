@@ -4,7 +4,7 @@ require_relative '../lib/csv_parser'
 
 class RepositoryTest < Minitest::Test
   def test_it_can_find_all_instances_of_criteria
-    new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
     assert_instance_of CustomerRepository, new_obj
     assert_equal 51, new_obj.data.length
 
@@ -12,7 +12,7 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_first_instances_of_criteria
-    new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
     assert_instance_of CustomerRepository, new_obj
     assert_equal 51, new_obj.data.length
 
@@ -22,7 +22,7 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_it_can_return_all
-    new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
     assert_instance_of CustomerRepository, new_obj
     assert_equal 51, new_obj.data.length
 
@@ -30,7 +30,7 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_it_can_return_random
-    new_obj = CSVParser.parse('invoice_items.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('invoice_items.csv', nil, CSVParser::TEST)
     assert_instance_of InvoiceItemRepository, new_obj
     assert_equal 500, new_obj.data.length
 

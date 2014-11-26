@@ -13,37 +13,37 @@ class CSVParserTest < Minitest::Test
   end
 
   def test_it_can_load_a_customer_to_the_correct_repository
-    new_obj = CSVParser.parse('customers.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('customers.csv', self, CSVParser::TEST)
     assert_instance_of CustomerRepository, new_obj
     assert_equal 51, new_obj.data.length
   end
 
   def test_it_can_load_invoice_items_to_the_correct_repository
-    new_obj = CSVParser.parse('invoice_items.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('invoice_items.csv', self, CSVParser::TEST)
     assert_instance_of InvoiceItemRepository, new_obj
     assert_equal 500, new_obj.data.length
   end
 
   def test_it_can_load_invoices_to_the_correct_repository
-    new_obj = CSVParser.parse('invoices.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('invoices.csv', self, CSVParser::TEST)
     assert_instance_of InvoiceRepository, new_obj
     assert_equal 100, new_obj.data.length
   end
 
   def test_it_can_load_items_to_the_correct_repository
-    new_obj = CSVParser.parse('items.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('items.csv', self, CSVParser::TEST)
     assert_instance_of ItemRepository, new_obj
     assert_equal 103, new_obj.data.length
   end
 
   def test_it_can_load_merchants_to_the_correct_repository
-    new_obj = CSVParser.parse('merchants.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('merchants.csv', self, CSVParser::TEST)
     assert_instance_of MerchantRepository, new_obj
     assert_equal 100, new_obj.data.length
   end
 
   def test_it_can_load_transactions_to_the_correct_repository
-    new_obj = CSVParser.parse('transactions.csv', CSVParser::TEST)
+    new_obj = CSVParser.parse('transactions.csv', self, CSVParser::TEST)
     assert_instance_of TransactionRepository, new_obj
     assert_equal 250, new_obj.data.length
   end

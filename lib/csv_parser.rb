@@ -18,8 +18,8 @@ class CSVParser
                      'transactions.csv'  => TransactionRepository
                    }
 
-  def self.parse(filename, filepath=PROD)
-    FILE_REPO_MAP[filename].new(csv_rows(filename,filepath))
+  def self.parse(filename, sales_engine, filepath=PROD)
+    FILE_REPO_MAP[filename].new(csv_rows(filename,filepath), sales_engine)
   end
 
   def self.csv_rows(filename, filepath)

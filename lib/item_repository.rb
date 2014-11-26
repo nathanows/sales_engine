@@ -10,7 +10,7 @@ class ItemRepository < Repository
   include UnitPriceFinder
   attr_reader :data
 
-  def initialize(entries)
+  def initialize(entries, sales_engine)
     @data ||= entries.map { |entry| Item.new(entry) }
   end
 

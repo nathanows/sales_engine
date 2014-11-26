@@ -3,7 +3,7 @@ require_relative 'repository'
 
 class CustomerRepository < Repository
   attr_reader :data
-  def initialize(entries)
+  def initialize(entries, sales_engine)
     @data ||= entries.map { |entry| Customer.new(entry) }
   end
 
