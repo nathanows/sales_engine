@@ -27,9 +27,15 @@ class MerchantTest < Minitest::Test
     assert_instance_of Date, merchant.updated_at
   end
 
-  def test_it_delegates_find_to_merchant_repo
+  def test_it_delegates_find_items_to_merchant_repo
     parent.expect(:find_items_from, nil,[1] )
     merchant.items
+    parent.verify
+  end
+
+  def test_it_delegates_find_invoices_to_merchant_repo
+    parent.expect(:find_invoices_from, nil,[1] )
+    merchant.invoices
     parent.verify
   end
 end

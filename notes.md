@@ -1,3 +1,5 @@
+https://github.com/turingschool/sales_engine_spec_harness/tree/master/spec
+
 class GenericRepository
   def all
     @entries.all

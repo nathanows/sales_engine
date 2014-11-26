@@ -30,9 +30,14 @@ class SalesEngine
     @invoice_repository      = CSVParser.parse('invoices.csv', self)
     @invoice_item_repository = CSVParser.parse('invoice_items.csv', self)
     @transaction_repository  = CSVParser.parse('transactions.csv', self)
+    self
   end
 
   def find_items_from_merchant(id)
     item_repository.find_all_by_merchant_id(id)
+  end
+
+  def find_invoices_from_merchant(id)
+    invoice_repository.find_all_by_merchant_id(id)
   end
 end
