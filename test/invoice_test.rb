@@ -35,4 +35,22 @@ class InvoiceTest < Minitest::Test
     invoice.transactions
     parent.verify
   end
+
+  def test_it_delegates_find_invoice_items_to_invoice_repo
+    parent.expect(:find_invoice_items_from, nil, [1])
+    invoice.invoice_items
+    parent.verify
+  end
+
+  def test_it_delegates_find_customer_to_invoice_repo
+    parent.expect(:find_customer_from, nil, [1])
+    invoice.customer
+    parent.verify
+  end
+
+  def test_it_delegates_find_merchant_to_invoice_repo
+    parent.expect(:find_merchant_from, nil, [26])
+    invoice.merchant
+    parent.verify
+  end
 end

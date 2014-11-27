@@ -19,4 +19,18 @@ class IntegrationTest < Minitest::Test
     assert_equal 1, invoice.transactions.length
   end
 
+  def test_an_invoice_can_have_invoice_items_returned
+    invoice = @@sales_engine.invoice_repository.data.first
+    assert_equal 8, invoice.invoice_items.length
+  end
+
+  def test_an_invoice_can_have_its_customer_returned
+    invoice = @@sales_engine.invoice_repository.data.first
+    assert_equal 1, invoice.customer.length
+  end
+
+  def test_an_invoice_can_have_its_merchant_returned
+    invoice = @@sales_engine.invoice_repository.data.first
+    assert_equal 1, invoice.merchant.length
+  end
 end

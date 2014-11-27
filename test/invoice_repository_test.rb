@@ -181,5 +181,23 @@ class InvoiceRepositoryTest < Minitest::Test
       invoice_repository.find_transactions_from(1)
       sales_engine.verify
     end
+
+    def test_it_delegates_invoice_items_to_sales_engine
+      sales_engine.expect(:find_invoice_items_from_invoice, nil, [1])
+      invoice_repository.find_invoice_items_from(1)
+      sales_engine.verify
+    end
+
+    def test_it_delegates_customer_to_sales_engine
+      sales_engine.expect(:find_customer_from_invoice, nil, [1])
+      invoice_repository.find_customer_from(1)
+      sales_engine.verify
+    end
+
+    def test_it_delegates_merchant_to_sales_engine
+      sales_engine.expect(:find_merchant_from_invoice, nil, [1])
+      invoice_repository.find_merchant_from(1)
+      sales_engine.verify
+    end
   end
 end
