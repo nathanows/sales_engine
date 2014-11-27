@@ -5,9 +5,10 @@ class Transaction
               :credit_card_expiration_date,
               :result,
               :created_at,
-              :updated_at
+              :updated_at,
+              :repository
 
-  def initialize(data)
+  def initialize(data, parent)
     @id                          = data[:id].to_i
     @invoice_id                  = data[:invoice_id].to_i
     @credit_card_number          = data[:credit_card_number].to_i
@@ -15,6 +16,11 @@ class Transaction
     @result                      = data[:result]
     @created_at                  = Date.parse(data[:created_at])
     @updated_at                  = Date.parse(data[:updated_at])
+    @repository                  = parent
+  end
+
+  def invoice
+    repository.find_invoice_from(invoice_id)
   end
 
 end

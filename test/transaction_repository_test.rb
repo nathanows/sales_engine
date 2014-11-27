@@ -134,4 +134,24 @@ class TransactionRepositoryTest < Minitest::Test
       assert_equal 250, find_results.length
     end
   end
+
+  class TransactionDelegationTest < TransactionRepositoryTest
+    attr_reader :sales_engine, :transaction_repository
+
+    def setup
+      entries = [data1, data2]
+      @sales_engine = Minitest::Mock.new
+      @transaction_repository = TransactionRepository.new(entries, @sales_engine)
+    end
+
+    def test_it_has_a_sales_engine
+      assert transaction_repository.sales_engine
+    end
+
+    def test_it_delegates_invoice_to_sales_engine
+      sales_engine.expect(:find_invoice_from_transaction, nil, [1])
+      transaction_repository.find_invoice_from(1)
+      sales_engine.verify
+    end
+  end
 end

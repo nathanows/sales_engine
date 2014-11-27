@@ -4,10 +4,11 @@ require_relative 'finders/invoice_id_finder'
 
 class TransactionRepository < Repository
   include InvoiceIDFinder
-  attr_reader :data
+  attr_reader :data, :sales_engine
 
   def initialize(entries, sales_engine)
-    @data ||= entries.map { |entry| Transaction.new(entry) }
+    @sales_engine = sales_engine
+    @data ||= entries.map { |entry| Transaction.new(entry, self) }
   end
 
   def find_by_credit_card_number(credit_card_number)
@@ -32,5 +33,9 @@ class TransactionRepository < Repository
 
   def find_all_by_result(result)
     find_all_by :result, result
+  end
+
+  def find_invoice_from(id)
+    sales_engine.find_invoice_from_transaction(id)
   end
 end
