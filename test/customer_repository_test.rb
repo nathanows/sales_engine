@@ -142,4 +142,24 @@ class CustomerRepositoryTest < Minitest::Test
       assert_equal 51, find_results.length
     end
   end
+
+  class CustomerDelegationTest < CustomerRepositoryTest
+    attr_reader :sales_engine, :customer_repository
+
+    def setup
+      entries = [data1, data2]
+      @sales_engine = Minitest::Mock.new
+      @customer_repository = CustomerRepository.new(entries, @sales_engine)
+    end
+
+    def test_it_has_a_sales_engine
+      assert customer_repository.sales_engine
+    end
+
+    def test_it_delegates_invoices_to_sales_engine
+      sales_engine.expect(:find_invoices_from_customer, nil, [1])
+      customer_repository.find_invoices_from(1)
+      sales_engine.verify
+    end
+  end
 end

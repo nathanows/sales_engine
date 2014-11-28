@@ -58,4 +58,10 @@ class IntegrationTest < Minitest::Test
     item = @@sales_engine.item_repository.data.first
     assert_instance_of Merchant, item.merchant
   end
+
+  def test_a_customer_can_have_its_invoices_returned
+    item = @@sales_engine.customer_repository.data.first
+    assert_instance_of Invoice, item.invoices.first
+    assert_equal 8, item.invoices.length
+  end
 end
