@@ -184,4 +184,30 @@ class InvoiceItemRepositoryTest < Minitest::Test
       assert_equal 500, find_results.length
     end
   end
+
+  class InvoiceItemDelegationTest < InvoiceItemRepositoryTest
+    attr_reader :invoice_item_repository, :sales_engine
+
+    def setup
+      entries = [data1,data2]
+      @sales_engine = Minitest::Mock.new
+      @invoice_item_repository = InvoiceItemRepository.new(entries, @sales_engine)
+    end
+
+    def test_it_has_a_sales_engine
+      assert invoice_item_repository.sales_engine
+    end
+
+    def test_it_delegates_invoices_to_sales_engine
+      sales_engine.expect(:find_invoice_from_invoice_item, nil, [1])
+      invoice_item_repository.find_invoice_from(1)
+      sales_engine.verify
+    end
+
+    def test_it_delegates_items_to_sales_engine
+      sales_engine.expect(:find_item_from_invoice_item, nil, [539])
+      invoice_item_repository.find_item_from(539)
+      sales_engine.verify
+    end
+  end
 end
