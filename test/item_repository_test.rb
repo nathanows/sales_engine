@@ -132,6 +132,31 @@ class ItemRepositoryTest < Minitest::Test
       find_results = new_obj.find_all_by_updated_at("2012-03-27")
       assert_equal 103, find_results.length
     end
+  end
 
+  class ItemDelegationTest < ItemRepositoryTest
+    attr_reader :item_repository, :sales_engine
+
+    def setup
+      entries          = [data1,data2]
+      @sales_engine    = Minitest::Mock.new
+      @item_repository = ItemRepository.new(entries, @sales_engine)
+    end
+
+    def test_it_has_a_sales_engine
+      assert item_repository.sales_engine
+    end
+
+    def test_it_delegates_invoices_to_sales_engine
+      sales_engine.expect(:find_invoice_items_from_item, nil, [1])
+      item_repository.find_invoice_items_from(1)
+      sales_engine.verify
+    end
+
+    def test_it_delegates_items_to_sales_engine
+      sales_engine.expect(:find_merchant_from_item, nil, [1])
+      item_repository.find_merchant_from(1)
+      sales_engine.verify
+    end
   end
 end

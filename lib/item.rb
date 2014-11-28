@@ -5,9 +5,10 @@ class Item
               :unit_price,
               :merchant_id,
               :created_at,
-              :updated_at
+              :updated_at,
+              :repository
 
-  def initialize(data)
+  def initialize(data, parent)
     @id          = data[:id].to_i
     @name        = data[:name]
     @description = data[:description]
@@ -15,5 +16,14 @@ class Item
     @merchant_id = data[:merchant_id].to_i
     @created_at  = Date.parse(data[:created_at])
     @updated_at  = Date.parse(data[:updated_at])
+    @repository  = parent
+  end
+
+  def invoice_items
+    repository.find_invoice_items_from(id)
+  end
+
+  def merchant
+    repository.find_merchant_from(id)
   end
 end

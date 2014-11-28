@@ -41,11 +41,21 @@ class IntegrationTest < Minitest::Test
 
   def test_an_invoice_item_can_have_its_invoice_returned
     invoice_item = @@sales_engine.invoice_item_repository.data.first
-    assert_equal 1, invoice_item.invoice.length
+    assert_instance_of Invoice, invoice_item.invoice
   end
 
-  def test_a_transaction_can_have_its_item_returned
+  def test_a_invoice_item_can_have_its_item_returned
     invoice_item = @@sales_engine.invoice_item_repository.data.first
-    assert_equal 1, invoice_item.item.length
+    assert_instance_of Item, invoice_item.item
+  end
+
+  def test_an_item_can_have_its_invoice_items_returned
+    item = @@sales_engine.item_repository.data.first
+    assert_equal 24, item.invoice_items.length
+  end
+
+  def test_an_item_can_have_its_merchant_returned
+    item = @@sales_engine.item_repository.data.first
+    assert_instance_of Merchant, item.merchant
   end
 end
