@@ -70,4 +70,23 @@ class IntegrationTest < Minitest::Test
     assert_instance_of Item, invoice.items.first
     assert_equal 8, invoice.items.length
   end
+
+  def test_merchant_finds_successful_invoices
+    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
+    assert_equal 59, all_charges.length
+
+    merchant_charged = @@sales_engine.merchant_repository.data.first
+    assert_equal 47, merchant_charged.successful_invoices.length
+  end
+
+  def test_merchant_finds_revenue
+    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
+    assert_equal 59, all_charges.length
+
+    merchant_charged = @@sales_engine.merchant_repository.data.first
+    assert_instance_of BigDecimal, merchant_charged.revenue
+    assert_equal BigDecimal.new(39813247), merchant_charged.revenue
+  end
+
+
 end

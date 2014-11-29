@@ -20,4 +20,12 @@ class Merchant
   def invoices
     repository.find_invoices_from(id)
   end
+
+  def revenue
+    repository.find_revenue_from(successful_invoices).reduce(:+)
+  end
+
+  def successful_invoices
+    invoices.select { |iv| repository.successful_trans_from_invoice?(iv.id) }
+  end
 end

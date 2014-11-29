@@ -118,5 +118,11 @@ class MerchantRepositoryTest < Minitest::Test
       merchant_repository.find_invoices_from(1)
       sales_engine.verify
     end
+
+    def test_it_delegates_revenue_to_sales_engine
+      sales_engine.expect(:find_revenue_from_merchant, nil, [1])
+      merchant_repository.find_revenue_from(1)
+      sales_engine.verify
+    end
   end
 end

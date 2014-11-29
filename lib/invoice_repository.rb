@@ -46,4 +46,8 @@ class InvoiceRepository < Repository
   def find_items_from(id)
     sales_engine.find_items_from_invoice(id)
   end
+
+  def find_revenue_from(invoice)
+    find_invoice_items_from(invoice.id).inject(0) { |sum, invoice_item| sum + invoice_item.revenue }
+  end
 end

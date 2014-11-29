@@ -87,4 +87,15 @@ class SalesEngine
       find_item_from_invoice_item(invoice_item.item_id)
     end
   end
+
+  def successful_trans_from_invoice?(id)
+    if transaction_repository.find_by_invoice_id(id).nil?
+      false
+    else transaction_repository.find_by_invoice_id(id).result == 'success'
+    end
+  end
+
+  def find_revenue_from_merchant(invoices)
+    invoices.map { |invoice| invoice_repository.find_revenue_from(invoice) }
+  end
 end
