@@ -13,7 +13,7 @@ class InvoiceItem
     @item_id     = data[:item_id].to_i
     @invoice_id  = data[:invoice_id].to_i
     @quantity    = data[:quantity].to_i
-    @unit_price  = data[:unit_price]
+    @unit_price  = BigDecimal.new(data[:unit_price])
     @created_at  = Date.parse(data[:created_at])
     @updated_at  = Date.parse(data[:updated_at])
     @repository  = parent
@@ -26,5 +26,4 @@ class InvoiceItem
   def item
     repository.find_item_from(item_id)
   end
-
 end

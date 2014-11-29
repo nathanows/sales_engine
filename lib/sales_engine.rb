@@ -5,6 +5,7 @@ require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
 require_relative 'transaction_repository'
 require_relative 'csv_parser'
+require          'bigdecimal'
 
 class SalesEngine
   attr_reader :customer_repository,

@@ -132,7 +132,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
       assert_instance_of InvoiceItemRepository, new_obj
       assert_equal 500, new_obj.data.length
 
-      find_results = new_obj.find_by_unit_price('52100')
+      find_results = new_obj.find_by_unit_price(52100)
       assert_instance_of InvoiceItem, find_results
       assert_equal 5, find_results.quantity
     end
@@ -142,7 +142,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
       assert_instance_of InvoiceItemRepository, new_obj
       assert_equal 500, new_obj.data.length
 
-      assert_equal 4, new_obj.find_all_by_unit_price('70783').size
+      assert_equal 4, new_obj.find_all_by_unit_price(70783).size
     end
 
 
@@ -153,7 +153,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
       find_results = new_obj.find_by_created_at('2012-03-27')
       assert_instance_of InvoiceItem, find_results
-      assert_equal '13635', find_results.unit_price
+      assert_equal 13635, find_results.unit_price
     end
 
     def test_it_can_return_all_instances_of_created_at
