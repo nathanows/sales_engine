@@ -42,4 +42,8 @@ class InvoiceRepository < Repository
   def find_merchant_from(id)
     sales_engine.find_merchant_from_invoice(id)
   end
+
+  def find_items_from(id)
+    sales_engine.find_items_from_invoice(id)
+  end
 end

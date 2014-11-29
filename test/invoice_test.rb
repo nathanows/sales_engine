@@ -53,4 +53,10 @@ class InvoiceTest < Minitest::Test
     invoice.merchant
     parent.verify
   end
+
+  def test_it_delegates_find_items_to_invoice_repo
+    parent.expect(:find_items_from, nil, [1])
+    invoice.items
+    parent.verify
+  end
 end

@@ -80,4 +80,10 @@ class SalesEngine
   def find_invoices_from_customer(id)
     invoice_repository.find_all_by_customer_id(id)
   end
+
+  def find_items_from_invoice(id)
+    find_invoice_items_from_invoice(id).map do |invoice_item|
+      find_item_from_invoice_item(invoice_item.item_id)
+    end
+  end
 end
