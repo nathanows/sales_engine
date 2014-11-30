@@ -97,5 +97,15 @@ class IntegrationTest < Minitest::Test
     assert_equal BigDecimal.new(1771651), merchant_charged.revenue(Date.parse('2012-03-27'))
   end
 
-
+  def test_item_repository_finds_top_sellers
+    top_5 = @@sales_engine.item_repository.most_revenue(5)
+    top_5.each { |item| puts "#{item.name} - #{(item.total_revenue / 100).to_f}" }
+    assert_equal 5, top_5.length
+    assert_instance_of Item, top_5.first
+    first = top_5[0].total_revenue
+    second = top_5[1].total_revenue
+    last = top_5[4].total_revenue
+    assert first >= second
+    assert second >= last
+  end
 end

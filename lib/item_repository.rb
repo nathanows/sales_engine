@@ -28,7 +28,23 @@ class ItemRepository < Repository
     sales_engine.find_invoice_items_from_item(id)
   end
 
+  def find_valid_invoice_items_from(id)
+    find_invoice_items_from(id).select do |invoice_item|
+      sales_engine.successful_trans_from_invoice?(invoice_item.invoice_id)
+    end
+  end
+
   def find_merchant_from(id)
     sales_engine.find_merchant_from_item(id)
+  end
+
+  def find_item_revenue(id)
+    find_valid_invoice_items_from(id).inject(0) do |sum, invoice_item|
+      sum + invoice_item.revenue
+    end
+  end
+
+  def most_revenue(x)
+    data.sort_by { |item| item.total_revenue }.last(x).reverse
   end
 end
