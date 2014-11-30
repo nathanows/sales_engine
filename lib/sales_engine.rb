@@ -82,6 +82,12 @@ class SalesEngine
     invoice_repository.find_all_by_customer_id(id)
   end
 
+  def find_transactions_from_customer(id)
+    find_invoices_from_customer(id).map do |invoice_item|
+      find_transactions_from_invoice(invoice_item.id)
+    end.flatten
+  end
+
   def find_items_from_invoice(id)
     find_invoice_items_from_invoice(id).map do |invoice_item|
       find_item_from_invoice_item(invoice_item.item_id)

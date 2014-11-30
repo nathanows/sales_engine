@@ -125,4 +125,11 @@ class IntegrationTest < Minitest::Test
     assert_instance_of Date, date
     assert_equal Date.new(2012, 3, 18), date
   end
+
+  def test_customer_can_find_transactions
+    customer = @@sales_engine.customer_repository.find_by_id 1
+    transactions = customer.transactions
+    assert_instance_of Transaction, transactions.first
+    assert_equal 7, transactions.length
+  end
 end

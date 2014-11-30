@@ -29,4 +29,8 @@ class CustomerRepository < Repository
   def find_invoices_from(id)
     sales_engine.find_invoices_from_customer(id)
   end
+
+  def find_transactions_from(id)
+    sales_engine.find_transactions_from_customer(id)
+  end
 end
