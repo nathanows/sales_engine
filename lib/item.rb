@@ -30,4 +30,8 @@ class Item
   def total_revenue
     repository.find_item_revenue(id)
   end
+
+  def number_sold
+    repository.find_items_sold(id)
+  end
 end
