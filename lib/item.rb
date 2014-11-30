@@ -34,4 +34,8 @@ class Item
   def number_sold
     repository.find_items_sold(id)
   end
+
+  def best_day
+    repository.find_best_day(id)
+  end
 end

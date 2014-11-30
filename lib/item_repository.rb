@@ -57,4 +57,20 @@ class ItemRepository < Repository
   def most_items(x)
     data.sort_by { |item| item.number_sold }.reverse.first(x)
   end
+
+  def invoice_items_by_date(id)
+    find_valid_invoice_items_from(id).group_by do |invoice_item|
+      invoice_item.invoice.created_at
+    end
+  end
+
+  def item_sales_by_date(id)
+    invoice_items_by_date(id).map do |date, objects|
+      {date => objects.reduce(0) { |sum, n| sum + n.revenue }}
+    end
+  end
+
+  def find_best_day(id)
+    item_sales_by_date(id).sort_by { |date, rev| rev }.first.keys.first
+  end
 end

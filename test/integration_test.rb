@@ -118,4 +118,11 @@ class IntegrationTest < Minitest::Test
     assert first >= second
     assert second >= last
   end
+
+  def test_item_can_find_best_date
+    item = @@sales_engine.item_repository.find_by_name "Item Accusamus Ut"
+    date = item.best_day
+    assert_instance_of Date, date
+    assert_equal Date.new(2012, 3, 18), date
+  end
 end
