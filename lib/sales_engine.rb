@@ -91,7 +91,7 @@ class SalesEngine
   def find_items_from_invoice(id)
     find_invoice_items_from_invoice(id).map do |invoice_item|
       find_item_from_invoice_item(invoice_item.item_id)
-    end
+    end.flatten
   end
 
   def successful_trans_from_invoice?(id)
