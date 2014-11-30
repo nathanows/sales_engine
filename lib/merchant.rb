@@ -21,8 +21,24 @@ class Merchant
     repository.find_invoices_from(id)
   end
 
-  def revenue
+  def revenue(date = nil)
+    if date
+      find_revenue_with_date(date)
+    else
+      find_revenue
+    end
+  end
+
+  def find_revenue_with_date(date)
+    repository.find_revenue_from(successful_invoices_dated(date)).reduce(:+)
+  end
+
+  def find_revenue
     repository.find_revenue_from(successful_invoices).reduce(:+)
+  end
+
+  def successful_invoices_dated(date)
+    successful_invoices.select { |iv| iv.created_at == date}
   end
 
   def successful_invoices

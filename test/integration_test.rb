@@ -88,5 +88,14 @@ class IntegrationTest < Minitest::Test
     assert_equal BigDecimal.new(39813247), merchant_charged.revenue
   end
 
+  def test_merchant_finds_revenue_by_date
+    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
+    assert_equal 59, all_charges.length
+
+    merchant_charged = @@sales_engine.merchant_repository.data.first
+    assert_instance_of BigDecimal, merchant_charged.revenue(Date.parse('2012-03-27'))
+    assert_equal BigDecimal.new(1771651), merchant_charged.revenue(Date.parse('2012-03-27'))
+  end
+
 
 end
