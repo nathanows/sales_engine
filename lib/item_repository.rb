@@ -44,7 +44,17 @@ class ItemRepository < Repository
     end
   end
 
+  def find_items_sold(id)
+    find_valid_invoice_items_from(id).inject(0) do |sum, invoice_item|
+      sum + invoice_item.quantity
+    end
+  end
+
   def most_revenue(x)
-    data.sort_by { |item| item.total_revenue }.last(x).reverse
+    data.sort_by { |item| item.total_revenue }.reverse.first(x)
+  end
+
+  def most_items(x)
+    data.sort_by { |item| item.number_sold }.reverse.first(x)
   end
 end
