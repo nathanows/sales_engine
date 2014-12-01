@@ -76,25 +76,20 @@ class IntegrationTest < Minitest::Test
     assert_equal 59, all_charges.length
 
     merchant_charged = @@sales_engine.merchant_repository.data.first
-    assert_equal 47, merchant_charged.successful_invoices.length
+    assert_equal 56, merchant_charged.successful_invoices.length
   end
 
   def test_merchant_finds_revenue
-    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
-    assert_equal 59, all_charges.length
+    merchant = @@sales_engine.merchant_repository.find_by_name("Dicki-Bednar")
 
-    merchant_charged = @@sales_engine.merchant_repository.data.first
-    assert_instance_of BigDecimal, merchant_charged.revenue
-    assert_equal BigDecimal.new(39813247), merchant_charged.revenue
+    assert_equal BigDecimal.new('1148393.74'), merchant.revenue
   end
 
   def test_merchant_finds_revenue_by_date
-    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
-    assert_equal 59, all_charges.length
+    merchant = @@sales_engine.merchant_repository.find_by_name("Willms and Sons")
+    date = Date.parse("Fri, 09 Mar 2012")
 
-    merchant_charged = @@sales_engine.merchant_repository.data.first
-    assert_instance_of BigDecimal, merchant_charged.revenue(Date.parse('2012-03-27'))
-    assert_equal BigDecimal.new(1771651), merchant_charged.revenue(Date.parse('2012-03-27'))
+    assert_equal BigDecimal.new("8373.29"), merchant.revenue(date)
   end
 
   def test_item_repository_finds_top_sellers
