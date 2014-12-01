@@ -23,9 +23,9 @@ class Merchant
 
   def revenue(date = nil)
     if date
-      find_revenue_with_date(date)
+      (find_revenue_with_date(date) / 100)
     else
-      find_revenue
+      (find_revenue / 100)
     end
   end
 

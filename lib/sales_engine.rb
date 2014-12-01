@@ -117,7 +117,7 @@ class SalesEngine
   def successful_trans_from_invoice?(id)
     if transaction_repository.find_by_invoice_id(id).nil?
       false
-    else transaction_repository.find_by_invoice_id(id).result == 'success'
+    else transaction_repository.find_all_by_invoice_id(id).any? { |trans| trans.result == 'success'}
     end
   end
 

@@ -20,8 +20,8 @@ class MerchantRepository < Repository
     sales_engine.find_invoices_from_merchant(id)
   end
 
-  def find_revenue_from(id)
-    sales_engine.find_revenue_from_merchant(id)
+  def find_revenue_from(invoices)
+    sales_engine.find_revenue_from_merchant(invoices)
   end
 
   def successful_trans_from_invoice?(id)
