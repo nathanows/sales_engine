@@ -58,6 +58,16 @@ class InvoiceRepository < Repository
     end
   end
 
+  def find_quantity_from(invoice)
+    find_quantity_from_invoice_items(invoice)
+  end
+
+  def find_quantity_from_invoice_items(invoice)
+    find_invoice_items_from(invoice.id).inject(0) do |sum, invoice_item|
+      sum + invoice_item.quantity
+    end
+  end
+
   def create(options = {})
     customer = options[:customer]
     merchant = options[:merchant]

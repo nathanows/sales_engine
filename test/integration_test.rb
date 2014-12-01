@@ -174,7 +174,6 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_merchant_repo_finds_most_items
-    skip
     most = @@sales_engine.merchant_repository.most_items(5)
     assert_equal "Kassulke, O'Hara and Quitzon", most.first.name
     assert_equal "Daugherty Group", most.last.name

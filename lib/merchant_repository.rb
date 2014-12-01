@@ -40,9 +40,9 @@ class MerchantRepository < Repository
     data.sort_by { |merchant| merchant.revenue }.reverse.first(x)
   end
 
-  # def most_items(x)
-  #   data.sort_by { |merchant| merchant.items }.reverse.first(x)
-  # end
+  def most_items(x)
+    data.sort_by { |merchant| merchant.most_quantity }.reverse.first(x)
+  end
 
   def remove_nil_revenue(date)
     data.select {|merchant| !merchant.revenue(date).nil? }
@@ -50,5 +50,9 @@ class MerchantRepository < Repository
 
   def revenue(date)
     remove_nil_revenue(date).reduce(0) { |sum, merchant| sum + merchant.revenue(date) }
+  end
+
+  def find_quantity_from(invoices)
+    sales_engine.find_quantity_from_merchant(invoices)
   end
 end

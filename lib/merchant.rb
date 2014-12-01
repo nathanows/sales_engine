@@ -60,4 +60,8 @@ class Merchant
   def pending_invoices
     invoices.select { |iv| repository.pending_trans_from_invoice?(iv.id)}
   end
+
+  def most_quantity
+    repository.find_quantity_from(successful_invoices).reduce(:+)
+  end
 end
