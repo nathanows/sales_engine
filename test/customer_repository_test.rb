@@ -162,4 +162,9 @@ class CustomerRepositoryTest < Minitest::Test
       sales_engine.verify
     end
   end
+
+  def test_inspect_returns_new_msg
+    new_obj = CSVParser.parse('customers.csv', nil, CSVParser::TEST)
+    assert_equal "#<CustomerRepository 51 rows>", new_obj.inspect
+  end
 end

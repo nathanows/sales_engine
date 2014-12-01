@@ -90,13 +90,13 @@ class ItemRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_first_instance_of_unit_price
-      find_results = new_obj.find_by_unit_price(75107)
+      find_results = new_obj.find_by_unit_price(751.07)
       assert_instance_of Item, find_results
       assert_equal 1, find_results.id
     end
 
     def test_it_can_return_all_instances_of_unit_price
-      find_results = new_obj.find_all_by_unit_price(75107)
+      find_results = new_obj.find_all_by_unit_price(751.07)
       assert_equal 1, find_results.length
     end
 

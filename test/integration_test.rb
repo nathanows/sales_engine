@@ -26,7 +26,7 @@ class IntegrationTest < Minitest::Test
 
   def test_an_invoice_can_have_its_customer_returned
     invoice = @@sales_engine.invoice_repository.data.first
-    assert_equal 1, invoice.customer.length
+    assert_instance_of Customer, invoice.customer
   end
 
   def test_an_invoice_can_have_its_merchant_returned
@@ -36,7 +36,7 @@ class IntegrationTest < Minitest::Test
 
   def test_a_transaction_can_have_its_invoice_returned
     transaction = @@sales_engine.transaction_repository.data.first
-    assert_equal 1, transaction.invoice.length
+    assert_instance_of Invoice, transaction.invoice
   end
 
   def test_an_invoice_item_can_have_its_invoice_returned

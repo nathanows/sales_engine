@@ -23,14 +23,16 @@ class Merchant
 
   def revenue(date = nil)
     if date
-      find_revenue_with_date(date) / 100 unless find_revenue_with_date(date).nil?
+      find_revenue_with_date(date)/100 unless find_revenue_with_date(date).nil?
     else
       (find_revenue / 100)
     end
   end
 
   def favorite_customer
-    invoices_to_customers(successful_invoices).max_by { |customer| invoices_to_customers(successful_invoices).count(customer.name) }
+    invoices_to_customers(successful_invoices).max_by do |customer|
+      invoices_to_customers(successful_invoices).count(customer.name)
+    end
   end
 
   def customers_with_pending_invoices

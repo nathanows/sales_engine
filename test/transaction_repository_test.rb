@@ -5,7 +5,7 @@ class TransactionRepositoryTest < Minitest::Test
   def data1
      {:id                          => 1,
       :invoice_id                  => 1,
-      :credit_card_number          => 4654405418249632,
+      :credit_card_number          => "4654405418249632",
       :credit_card_expiration_date => '',
       :result                      => 'success',
       :created_at                  => '2012-03-27 14:54:09 UTC',
@@ -16,7 +16,7 @@ class TransactionRepositoryTest < Minitest::Test
   def data2
      {:id                          => 2,
       :invoice_id                  => 222,
-      :credit_card_number          => 4600005418249632,
+      :credit_card_number          => "4600005418249632",
       :credit_card_expiration_date => '',
       :result                      => 'failed',
       :created_at                  => '2012-03-27 14:54:09 UTC',
@@ -80,13 +80,13 @@ class TransactionRepositoryTest < Minitest::Test
     end
 
     def test_it_can_return_first_instance_of_credit_card_number
-      find_results = new_obj.find_by_credit_card_number(4763141973880496)
+      find_results = new_obj.find_by_credit_card_number("4763141973880496")
       assert_instance_of Transaction, find_results
       assert_equal 17, find_results.id
     end
 
     def test_it_can_return_all_instances_of_credit_card_number
-      find_results = new_obj.find_all_by_credit_card_number(4763141973880496)
+      find_results = new_obj.find_all_by_credit_card_number("4763141973880496")
       assert_equal 1, find_results.length
     end
 

@@ -51,4 +51,8 @@ class Repository
     find_all_by_date :updated_at, updated_at
   end
 
+  def inspect
+    "#<#{self.class} #{@data.size} rows>"
+  end
+
 end

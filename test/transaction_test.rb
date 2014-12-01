@@ -6,7 +6,7 @@ class TransactionTest < Minitest::Test
   def setup
     data = {:id                          => 1,
             :invoice_id                  => 1,
-            :credit_card_number          => 4654405418249632,
+            :credit_card_number          => "4654405418249632",
             :credit_card_expiration_date => '10/14',
             :result                      => 'success',
             :created_at                  => '2012-03-27 14:54:09 UTC',
@@ -19,7 +19,7 @@ class TransactionTest < Minitest::Test
   def test_transaction_has_it_attributes
     assert_equal 1, transaction.id
     assert_equal 1, transaction.invoice_id
-    assert_equal 4654405418249632, transaction.credit_card_number
+    assert_equal "4654405418249632", transaction.credit_card_number
     assert_equal '10/14', transaction.credit_card_expiration_date
     assert_equal 'success', transaction.result
   end

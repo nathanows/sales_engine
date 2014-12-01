@@ -49,7 +49,9 @@ class MerchantRepository < Repository
   end
 
   def revenue(date)
-    remove_nil_revenue(date).reduce(0) { |sum, merchant| sum + merchant.revenue(date) }
+    remove_nil_revenue(date).reduce(0) do |sum, merchant|
+      sum + merchant.revenue(date)
+    end
   end
 
   def find_quantity_from(invoices)

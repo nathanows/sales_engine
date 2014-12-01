@@ -51,7 +51,7 @@ class SalesEngine
   end
 
   def find_customer_from_invoice(id)
-    customer_repository.find_all_by_id(id)
+    customer_repository.find_by_id(id)
   end
 
   def find_merchant_from_invoice(id)
@@ -59,7 +59,7 @@ class SalesEngine
   end
 
   def find_invoice_from_transaction(id)
-    invoice_repository.find_all_by_id(id)
+    invoice_repository.find_by_id(id)
   end
 
   def find_invoice_from_invoice_item(id)
@@ -96,9 +96,7 @@ class SalesEngine
 
   def merch_succesful_from_cust(customer_id)
     successful_trans_from_customer(customer_id).map do |trans|
-      find_invoice_from_transaction(trans.invoice_id).map do |invoice|
-        find_merchant_from_invoice(invoice.merchant_id)
-      end
+      find_merchant_from_invoice(find_invoice_from_transaction(trans.invoice_id).merchant_id)
     end.flatten
   end
 
@@ -117,14 +115,20 @@ class SalesEngine
   def successful_trans_from_invoice?(id)
     if transaction_repository.find_by_invoice_id(id).nil?
       false
-    else transaction_repository.find_all_by_invoice_id(id).any? { |trans| trans.result == 'success'}
+    else
+      transaction_repository.find_all_by_invoice_id(id).any? do |trans|
+        trans.result == 'success'
+      end
     end
   end
 
   def pending_trans_from_invoice?(id)
     if transaction_repository.find_by_invoice_id(id).nil?
       false
-    else !transaction_repository.find_all_by_invoice_id(id).any? { |trans| trans.result == 'success'}
+    else
+      !transaction_repository.find_all_by_invoice_id(id).any? do |trans|
+        trans.result == 'success'
+      end
     end
   end
 

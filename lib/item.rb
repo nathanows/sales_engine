@@ -24,7 +24,7 @@ class Item
   end
 
   def merchant
-    repository.find_merchant_from(id)
+    repository.find_merchant_from(merchant_id)
   end
 
   def total_revenue
