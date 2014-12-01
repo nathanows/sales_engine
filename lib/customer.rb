@@ -27,4 +27,8 @@ class Customer
   def transactions
     repository.find_transactions_from(id)
   end
+
+  def favorite_merchant
+    repository.find_favorite_merchant_from(id)
+  end
 end

@@ -132,4 +132,11 @@ class IntegrationTest < Minitest::Test
     assert_instance_of Transaction, transactions.first
     assert_equal 7, transactions.length
   end
+
+  def test_a_customer_can_find_its_favorite_merchant
+    customer = @@sales_engine.customer_repository.find_by_id 13
+    favorite_merch = customer.favorite_merchant
+    assert_instance_of Merchant, favorite_merch
+    assert_equal "Kirlin, Jakubowski and Smitham", favorite_merch.name
+  end
 end
