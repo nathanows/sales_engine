@@ -28,7 +28,11 @@ class MerchantRepository < Repository
     sales_engine.successful_trans_from_invoice?(id)
   end
 
-  def find_successful_customers(invoices)
-    sales_engine.find_successful_customers(invoices)
+  def pending_trans_from_invoice?(id)
+    sales_engine.pending_trans_from_invoice?(id)
+  end
+
+  def find_invoice_customers(invoices)
+    sales_engine.find_invoice_customers(invoices)
   end
 end

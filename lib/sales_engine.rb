@@ -121,6 +121,13 @@ class SalesEngine
     end
   end
 
+  def pending_trans_from_invoice?(id)
+    if transaction_repository.find_by_invoice_id(id).nil?
+      false
+    else !transaction_repository.find_all_by_invoice_id(id).any? { |trans| trans.result == 'success'}
+    end
+  end
+
   def find_revenue_from_merchant(invoices)
     invoices.map { |invoice| invoice_repository.find_revenue_from(invoice) }
   end
@@ -135,9 +142,9 @@ class SalesEngine
     invoice
   end
 
-  def find_successful_customers(successful_invoices)
-    successful_invoices.map do |invoice|
-      find_customer_from_invoice(invoice.id)
+  def find_invoice_customers(invoices)
+    invoices.map do |invoice|
+      find_customer_from_invoice(invoice.customer_id)
     end.flatten
   end
 end

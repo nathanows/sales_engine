@@ -160,6 +160,15 @@ class IntegrationTest < Minitest::Test
 
     merchant_charged = @@sales_engine.merchant_repository.data.first
     assert_instance_of Customer, merchant_charged.favorite_customer
-    assert_equal 'Albina Erdman', merchant_charged.favorite_customer.name
+    assert_equal 'Parker Daugherty', merchant_charged.favorite_customer.name
+  end
+
+  def test_merchant_finds_pending_invoices
+    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
+    assert_equal 59, all_charges.length
+
+    merchant_charged = @@sales_engine.merchant_repository.data.first
+    assert_instance_of Customer, merchant_charged.customers_with_pending_invoices.first
+    assert_equal 2, merchant_charged.customers_with_pending_invoices.length
   end
 end

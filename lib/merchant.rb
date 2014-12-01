@@ -30,11 +30,15 @@ class Merchant
   end
 
   def favorite_customer
-    successful_customers.max_by { |customer| successful_customers.count(customer.name) }
+    invoices_to_customers(successful_invoices).max_by { |customer| invoices_to_customers(successful_invoices).count(customer.name) }
   end
 
-  def successful_customers
-    repository.find_successful_customers(successful_invoices)
+  def customers_with_pending_invoices
+    invoices_to_customers(pending_invoices)
+  end
+
+  def invoices_to_customers(invoices)
+    repository.find_invoice_customers(invoices)
   end
 
   def find_revenue_with_date(date)
@@ -51,5 +55,9 @@ class Merchant
 
   def successful_invoices
     invoices.select { |iv| repository.successful_trans_from_invoice?(iv.id) }
+  end
+
+  def pending_invoices
+    invoices.select { |iv| repository.pending_trans_from_invoice?(iv.id)}
   end
 end
