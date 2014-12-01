@@ -128,4 +128,10 @@ class SalesEngine
   def find_favorite_merchant_from_customer(id)
     merch_succesful_counts_from_cust(id).first.first
   end
+
+  def create_invoice(customer, merchant, status, items)
+    invoice = invoice_repository.add(customer, merchant, status)
+    invoice_item_repository.add(invoice, items)
+    invoice
+  end
 end

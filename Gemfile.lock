@@ -3,8 +3,6 @@ GEM
   specs:
     cane (2.6.2)
       parallel
-    codeclimate-test-reporter (0.4.1)
-      simplecov (>= 0.7.1, < 1.0.0)
     docile (1.1.5)
     minitest (5.4.3)
     multi_json (1.10.1)
@@ -33,7 +31,6 @@ PLATFORMS
 
 DEPENDENCIES
   cane
-  codeclimate-test-reporter
   minitest
   rake
   reek

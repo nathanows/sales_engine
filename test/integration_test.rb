@@ -139,4 +139,18 @@ class IntegrationTest < Minitest::Test
     assert_instance_of Merchant, favorite_merch
     assert_equal "Kirlin, Jakubowski and Smitham", favorite_merch.name
   end
+
+  def test_you_can_create_new_invoices
+    customer = @@sales_engine.customer_repository.find_by_id 7
+    merchant = @@sales_engine.merchant_repository.find_by_id 22
+    items    = (1..3).map { @@sales_engine.item_repository.random }
+
+    starter_length = @@sales_engine.invoice_item_repository.data.length
+
+    invoice  = @@sales_engine.invoice_repository.create(customer: customer, merchant: merchant, items: items)
+
+    assert_equal merchant.id, invoice.merchant_id
+    assert_equal customer.id, invoice.customer_id
+    assert_equal starter_length + 3, @@sales_engine.invoice_item_repository.data.length
+  end
 end
