@@ -153,4 +153,13 @@ class IntegrationTest < Minitest::Test
     assert_equal customer.id, invoice.customer_id
     assert_equal starter_length + 3, @@sales_engine.invoice_item_repository.data.length
   end
+
+  def test_you_can_find_favorite_customer_from_merchant
+    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
+    assert_equal 59, all_charges.length
+
+    merchant_charged = @@sales_engine.merchant_repository.data.first
+    assert_instance_of Customer, merchant_charged.favorite_customer
+    assert_equal 'Albina Erdman', merchant_charged.favorite_customer.name
+  end
 end

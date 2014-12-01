@@ -134,4 +134,10 @@ class SalesEngine
     invoice_item_repository.add(invoice, items)
     invoice
   end
+
+  def find_successful_customers(successful_invoices)
+    successful_invoices.map do |invoice|
+      find_customer_from_invoice(invoice.id)
+    end.flatten
+  end
 end

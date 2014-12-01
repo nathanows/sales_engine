@@ -29,6 +29,14 @@ class Merchant
     end
   end
 
+  def favorite_customer
+    successful_customers.max_by { |customer| successful_customers.count(customer.name) }
+  end
+
+  def successful_customers
+    repository.find_successful_customers(successful_invoices)
+  end
+
   def find_revenue_with_date(date)
     repository.find_revenue_from(successful_invoices_dated(date)).reduce(:+)
   end
