@@ -88,6 +88,26 @@ class SalesEngine
     end.flatten
   end
 
+  def successful_trans_from_customer(customer_id)
+    find_transactions_from_customer(customer_id).select do |trans|
+      trans.result == 'success'
+    end.flatten
+  end
+
+  def merch_succesful_from_cust(customer_id)
+    successful_trans_from_customer(customer_id).map do |trans|
+      find_invoice_from_transaction(trans.invoice_id).map do |invoice|
+        find_merchant_from_invoice(invoice.merchant_id)
+      end
+    end.flatten
+  end
+
+  def merch_succesful_counts_from_cust(id)
+    merch_succesful_from_cust(id).each_with_object(Hash.new(0)) do |obj, count|
+      count[obj] += 1
+    end.sort_by { |key, value| value }.reverse
+  end
+
   def find_items_from_invoice(id)
     find_invoice_items_from_invoice(id).map do |invoice_item|
       find_item_from_invoice_item(invoice_item.item_id)
@@ -103,5 +123,9 @@ class SalesEngine
 
   def find_revenue_from_merchant(invoices)
     invoices.map { |invoice| invoice_repository.find_revenue_from(invoice) }
+  end
+
+  def find_favorite_merchant_from_customer(id)
+    merch_succesful_counts_from_cust(id).first.first
   end
 end
