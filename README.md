@@ -1,4 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/ndwhtlssthr/sales_engine.png?label=ready&title=Ready)](https://waffle.io/ndwhtlssthr/sales_engine)
+[![Code Climate](https://codeclimate.com/github/ndwhtlssthr/sales_engine/badges/gpa.svg)](https://codeclimate.com/github/ndwhtlssthr/sales_engine)
 # Sales Engine
 
 (insert project completion goals for first check-in here)
