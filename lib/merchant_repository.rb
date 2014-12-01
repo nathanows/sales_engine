@@ -35,4 +35,8 @@ class MerchantRepository < Repository
   def find_invoice_customers(invoices)
     sales_engine.find_invoice_customers(invoices)
   end
+
+  def most_revenue(x)
+    data.sort_by { |merchant| merchant.revenue  }.reverse.first(x)
+  end
 end

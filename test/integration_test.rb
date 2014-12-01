@@ -171,4 +171,10 @@ class IntegrationTest < Minitest::Test
     assert_instance_of Customer, merchant_charged.customers_with_pending_invoices.first
     assert_equal 2, merchant_charged.customers_with_pending_invoices.length
   end
+
+  def test_merchant_repo_finds_most_revenue
+    most = @@sales_engine.merchant_repository.most_revenue(3)
+    assert_equal "Dicki-Bednar", most.first.name
+    assert_equal "Okuneva, Prohaska and Rolfson", most.last.name
+  end
 end
