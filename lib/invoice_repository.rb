@@ -52,6 +52,8 @@ class InvoiceRepository < Repository
   end
 
   def find_revenue_from_invoice_items(invoice)
-    find_invoice_items_from(invoice.id).inject(0) { |sum, invoice_item| sum + invoice_item.revenue }
+    find_invoice_items_from(invoice.id).inject(0) do |sum, invoice_item|
+      sum + invoice_item.revenue
+    end
   end
 end
