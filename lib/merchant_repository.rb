@@ -37,6 +37,18 @@ class MerchantRepository < Repository
   end
 
   def most_revenue(x)
-    data.sort_by { |merchant| merchant.revenue  }.reverse.first(x)
+    data.sort_by { |merchant| merchant.revenue }.reverse.first(x)
+  end
+
+  # def most_items(x)
+  #   data.sort_by { |merchant| merchant.items }.reverse.first(x)
+  # end
+
+  def remove_nil_revenue(date)
+    data.select {|merchant| !merchant.revenue(date).nil? }
+  end
+
+  def revenue(date)
+    remove_nil_revenue(date).reduce(0) { |sum, merchant| sum + merchant.revenue(date) }
   end
 end

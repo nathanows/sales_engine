@@ -172,4 +172,16 @@ class IntegrationTest < Minitest::Test
     assert_equal "Dicki-Bednar", most.first.name
     assert_equal "Okuneva, Prohaska and Rolfson", most.last.name
   end
+
+  def test_merchant_repo_finds_most_items
+    skip
+    most = @@sales_engine.merchant_repository.most_items(5)
+    assert_equal "Kassulke, O'Hara and Quitzon", most.first.name
+    assert_equal "Daugherty Group", most.last.name
+  end
+
+  def test_merchant_repo_finds_revenue_for_date
+    date = Date.parse("Tue, 20 Mar 2012")
+    assert_equal BigDecimal.new("2549722.91") , @@sales_engine.merchant_repository.revenue(date)
+  end
 end
