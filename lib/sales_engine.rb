@@ -123,13 +123,7 @@ class SalesEngine
   end
 
   def pending_trans_from_invoice?(id)
-    if transaction_repository.find_by_invoice_id(id).nil?
-      true
-    else
-      !transaction_repository.find_all_by_invoice_id(id).any? do |trans|
-        trans.result == 'success'
-      end
-    end
+    !successful_trans_from_invoice?(id)
   end
 
   def find_revenue_from_merchant(invoices)

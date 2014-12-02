@@ -39,8 +39,8 @@ class Invoice
 
   def charge(options = {})
     credit_card_number = options[:credit_card_number]
-    credit_card_exp = options[:credit_card_expiration]
-    result = options[:result]
+    credit_card_exp    = options[:credit_card_expiration]
+    result             = options[:result]
     repository.charge_invoice(credit_card_number, credit_card_exp, result, self.id)
   end
 
