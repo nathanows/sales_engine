@@ -150,21 +150,32 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_you_can_find_favorite_customer_from_merchant
-    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
-    assert_equal 59, all_charges.length
+    merchant = @@sales_engine.merchant_repository.find_by_name "Terry-Moore"
+    customer_names =
+                    [["Jayme", "Hammes"], ["Elmer", "Konopelski"], ["Eleanora", "Kling"],
+                    ["Friedrich", "Rowe"], ["Orion", "Hills"], ["Lambert", "Abernathy"]]
 
-    merchant_charged = @@sales_engine.merchant_repository.data.first
-    assert_instance_of Customer, merchant_charged.favorite_customer
-    assert_equal 'Parker Daugherty', merchant_charged.favorite_customer.name
+    customer = merchant.favorite_customer
+    name_includes = customer_names.any? do |first_name, last_name|
+                    first_name == customer.first_name && last_name == customer.last_name
+                  end
+    assert name_includes
   end
+    # all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
+    # assert_equal 59, all_charges.length
+    #
+    # merchant_charged = @@sales_engine.merchant_repository.data.first
+    # assert_instance_of Customer, merchant_charged.favorite_customer
+    # assert_equal 'Parker Daugherty', merchant_charged.favorite_customer.name
+  # end
 
   def test_merchant_finds_pending_invoices
-    all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
-    assert_equal 59, all_charges.length
+    merchant = @@sales_engine.merchant_repository.find_by_name "Parisian Group"
+    customers = merchant.customers_with_pending_invoices
+    customers_last_name = customers.map { |customer| customer.last_name  }
 
-    merchant_charged = @@sales_engine.merchant_repository.data.first
-    assert_instance_of Customer, merchant_charged.customers_with_pending_invoices.first
-    assert_equal 2, merchant_charged.customers_with_pending_invoices.length
+    assert_equal 4, customers.count
+    assert_includes(customers_last_name,'Ledner')
   end
 
   def test_merchant_repo_finds_most_revenue
