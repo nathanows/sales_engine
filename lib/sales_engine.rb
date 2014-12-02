@@ -150,6 +150,10 @@ class SalesEngine
     invoice
   end
 
+  def charge_invoice(cc_num, cc_exp, result, invoice_id)
+    transaction_repository.add(cc_num, cc_exp, result, invoice_id)
+  end
+
   def find_invoice_customers(invoices)
     invoices.map do |invoice|
       find_customer_from_invoice(invoice.customer_id)

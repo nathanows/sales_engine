@@ -122,10 +122,10 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_customer_can_find_transactions
-    customer = @@sales_engine.customer_repository.find_by_id 1
+    customer = @@sales_engine.customer_repository.find_by_id 2
     transactions = customer.transactions
     assert_instance_of Transaction, transactions.first
-    assert_equal 7, transactions.length
+    assert_equal 1, transactions.length
   end
 
   def test_a_customer_can_find_its_favorite_merchant
@@ -149,6 +149,18 @@ class IntegrationTest < Minitest::Test
     assert_equal starter_length + 3, @@sales_engine.invoice_item_repository.data.length
   end
 
+  def test_you_can_charge_an_invoice
+    invoice = @@sales_engine.invoice_repository.find_by_id 3
+    prior_trans_count = invoice.transactions.count
+
+    invoice.charge(credit_card_number: '1111222233334444',
+                   credit_card_expiration_date: '10/14',
+                   result: 'success')
+
+    invoice = @@sales_engine.invoice_repository.find_by_id invoice.id
+    assert_equal prior_trans_count.next, invoice.transactions.count
+  end
+
   def test_you_can_find_favorite_customer_from_merchant
     merchant = @@sales_engine.merchant_repository.find_by_name "Terry-Moore"
     customer_names =
@@ -161,13 +173,6 @@ class IntegrationTest < Minitest::Test
                   end
     assert name_includes
   end
-    # all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
-    # assert_equal 59, all_charges.length
-    #
-    # merchant_charged = @@sales_engine.merchant_repository.data.first
-    # assert_instance_of Customer, merchant_charged.favorite_customer
-    # assert_equal 'Parker Daugherty', merchant_charged.favorite_customer.name
-  # end
 
   def test_merchant_finds_pending_invoices
     merchant = @@sales_engine.merchant_repository.find_by_name "Parisian Group"

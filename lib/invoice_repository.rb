@@ -76,6 +76,10 @@ class InvoiceRepository < Repository
     sales_engine.create_invoice(customer, merchant, status, items)
   end
 
+  def charge_invoice(credit_card_number, credit_card_exp, result, id)
+    sales_engine.charge_invoice(credit_card_number, credit_card_exp, result, id)
+  end
+
   def add(customer, merchant, status)
     new_invoice = {
       :id          => next_id,
