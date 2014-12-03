@@ -22,20 +22,15 @@ class Merchant
   end
 
   def revenue(date = nil)
-    if date
-      revenue = find_revenue_with_date(date)
-      revenue/100 unless revenue.nil?
-    else
-      rev = find_revenue
-      (rev / 100) unless rev.nil?
-    end
+    rev = find_revenue(date)
+    (rev / 100) unless rev.nil?
   end
 
   def favorite_customer
     invoices_to_customers(successful_invoices)
-      .each_with_object(Hash.new(0)) do |customer, count|
+      .each_with_object(Hash.new(0)) { |customer, count|
         count[customer] += 1
-      end.max_by { |key, value| value }.first
+      }.max_by { |key, value| value }.first
   end
 
   def customers_with_pending_invoices
@@ -46,20 +41,13 @@ class Merchant
     repository.find_invoice_customers(invoices)
   end
 
-  def find_revenue_with_date(date)
-    repository.find_revenue_from(successful_invoices_dated(date)).reduce(:+)
+  def find_revenue(date)
+    repository.find_revenue_from(successful_invoices(date)).reduce(:+)
   end
 
-  def find_revenue
-    repository.find_revenue_from(successful_invoices).reduce(:+)
-  end
-
-  def successful_invoices_dated(date)
-    successful_invoices.select { |iv| iv.created_at == date}
-  end
-
-  def successful_invoices
-    invoices.select { |iv| iv.successful_transactions? }
+  def successful_invoices(date = nil)
+    succ_invoices = invoices.select { |iv| iv.successful_transactions? }
+    date ? succ_invoices.select { |iv| iv.created_at == date} : succ_invoices
   end
 
   def pending_invoices
