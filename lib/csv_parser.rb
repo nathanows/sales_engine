@@ -8,7 +8,7 @@ require_relative 'transaction_repository'
 
 class CSVParser
   PROD = './data/'
-  TEST = './test/fixtures/'
+  TEST = './fixtures/'
   FILE_REPO_MAP  = {
                      'customers.csv'     => CustomerRepository,
                      'invoice_items.csv' => InvoiceItemRepository,
@@ -18,7 +18,7 @@ class CSVParser
                      'transactions.csv'  => TransactionRepository
                    }
 
-  def self.parse(filename, sales_engine, filepath=PROD)
+  def self.parse(filename, sales_engine, filepath)
     FILE_REPO_MAP[filename].new(csv_rows(filename,filepath), sales_engine)
   end
 
@@ -38,7 +38,7 @@ class CSVParser
     CSV.open file_path, headers: true, header_converters: :symbol
   end
 
-  def self.get_filepath(filename, filepath=PROD)
+  def self.get_filepath(filename, filepath)
     File.join(filepath, filename)
   end
 end

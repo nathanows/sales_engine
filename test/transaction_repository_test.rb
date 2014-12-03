@@ -54,7 +54,7 @@ class TransactionRepositoryTest < Minitest::Test
 
     def test_it_creates_a_valid_object
       assert_instance_of TransactionRepository, new_obj
-      assert_equal 250, new_obj.data.length
+      assert_equal 249, new_obj.data.length
     end
 
     def test_it_can_return_first_instance_of_id
@@ -109,7 +109,7 @@ class TransactionRepositoryTest < Minitest::Test
 
     def test_it_can_return_all_instances_of_result
       find_results = new_obj.find_all_by_result("failed")
-      assert_equal 39, find_results.length
+      assert_equal 40, find_results.length
     end
 
     def test_it_can_return_first_instance_of_created_at
@@ -120,7 +120,7 @@ class TransactionRepositoryTest < Minitest::Test
 
     def test_it_can_return_all_instances_of_created_at
       find_results = new_obj.find_all_by_created_at("2012-03-27")
-      assert_equal 250, find_results.length
+      assert_equal 249, find_results.length
     end
 
     def test_it_can_return_first_instance_of_updated_at
@@ -131,7 +131,7 @@ class TransactionRepositoryTest < Minitest::Test
 
     def test_it_can_return_all_instances_of_updated_at
       find_results = new_obj.find_all_by_updated_at("2012-03-27")
-      assert_equal 250, find_results.length
+      assert_equal 249, find_results.length
     end
   end
 

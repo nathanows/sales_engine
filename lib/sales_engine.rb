@@ -13,9 +13,13 @@ class SalesEngine
               :item_repository,
               :invoice_repository,
               :invoice_item_repository,
-              :transaction_repository
+              :transaction_repository,
+              :data_source
 
-  def initialize
+  DATA_PATH = File.expand_path('../..', __FILE__)
+
+  def initialize(data_source = File.join(DATA_PATH,'data'))
+    @data_source = data_source
     @customer_repository
     @merchant_repository
     @item_repository
@@ -25,12 +29,12 @@ class SalesEngine
   end
 
   def startup
-    @customer_repository     = CSVParser.parse('customers.csv', self)
-    @merchant_repository     = CSVParser.parse('merchants.csv', self)
-    @item_repository         = CSVParser.parse('items.csv', self)
-    @invoice_repository      = CSVParser.parse('invoices.csv', self)
-    @invoice_item_repository = CSVParser.parse('invoice_items.csv', self)
-    @transaction_repository  = CSVParser.parse('transactions.csv', self)
+    @customer_repository     = CSVParser.parse('customers.csv', self, data_source)
+    @merchant_repository     = CSVParser.parse('merchants.csv', self, data_source)
+    @item_repository         = CSVParser.parse('items.csv', self, data_source)
+    @invoice_repository      = CSVParser.parse('invoices.csv', self, data_source)
+    @invoice_item_repository = CSVParser.parse('invoice_items.csv', self, data_source)
+    @transaction_repository  = CSVParser.parse('transactions.csv', self, data_source)
     self
   end
 

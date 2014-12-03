@@ -2,7 +2,7 @@ require_relative 'test_helper'
 require_relative '../lib/sales_engine'
 
 class IntegrationTest < Minitest::Test
-  @@sales_engine = SalesEngine.new.startup
+  @@sales_engine = SalesEngine.new(File.join(SalesEngine::DATA_PATH, 'fixtures')).startup
 
   def test_a_merchant_can_have_items_returned
     merchant = @@sales_engine.merchant_repository.data.first
@@ -11,7 +11,7 @@ class IntegrationTest < Minitest::Test
 
   def test_a_merchant_can_have_invoices_returned
     merchant = @@sales_engine.merchant_repository.data.first
-    assert_equal 59, merchant.invoices.length
+    assert_equal 1, merchant.invoices.length
   end
 
   def test_an_invoice_can_have_transactions_returned
@@ -50,8 +50,8 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_an_item_can_have_its_invoice_items_returned
-    item = @@sales_engine.item_repository.data.first
-    assert_equal 24, item.invoice_items.length
+    item = @@sales_engine.item_repository.find_by_id 1
+    assert_equal 2, item.invoice_items.length
   end
 
   def test_an_item_can_have_its_merchant_returned
@@ -66,30 +66,30 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_an_invoice_can_have_its_items_returned
-    invoice = @@sales_engine.invoice_repository.data.first
+    invoice = @@sales_engine.invoice_repository.find_by_id 19
     assert_instance_of Item, invoice.items.first
-    assert_equal 8, invoice.items.length
+    assert_equal 3, invoice.items.length
   end
 
   def test_merchant_finds_successful_invoices
     all_charges = @@sales_engine.merchant_repository.find_invoices_from(1)
-    assert_equal 59, all_charges.length
+    assert_equal 1, all_charges.length
 
     merchant_charged = @@sales_engine.merchant_repository.data.first
-    assert_equal 56, merchant_charged.successful_invoices.length
+    assert_equal 1, merchant_charged.successful_invoices.length
   end
 
   def test_merchant_finds_revenue
     merchant = @@sales_engine.merchant_repository.find_by_name("Dicki-Bednar")
 
-    assert_equal BigDecimal.new('1148393.74'), merchant.revenue
+    assert_equal BigDecimal.new('24742.51'), merchant.revenue
   end
 
   def test_merchant_finds_revenue_by_date
-    merchant = @@sales_engine.merchant_repository.find_by_name("Willms and Sons")
-    date = Date.parse("Fri, 09 Mar 2012")
+    merchant = @@sales_engine.merchant_repository.find_by_id 4
+    date = Date.parse("2012-03-27")
 
-    assert_equal BigDecimal.new("8373.29"), merchant.revenue(date)
+    assert_equal BigDecimal.new("1291.44"), merchant.revenue(date)
   end
 
   def test_item_repository_finds_top_sellers
@@ -115,10 +115,10 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_item_can_find_best_date
-    item = @@sales_engine.item_repository.find_by_name "Item Accusamus Ut"
+    item = @@sales_engine.item_repository.find_by_id 1
     date = item.best_day
     assert_instance_of Date, date
-    assert_equal Date.new(2012, 3, 18), date
+    assert_equal Date.new(2012, 3, 19), date
   end
 
   def test_customer_can_find_transactions
@@ -138,7 +138,10 @@ class IntegrationTest < Minitest::Test
   def test_you_can_create_new_invoices
     customer = @@sales_engine.customer_repository.find_by_id 7
     merchant = @@sales_engine.merchant_repository.find_by_id 22
-    items    = (1..3).map { @@sales_engine.item_repository.random }
+    items    = [@@sales_engine.item_repository.find_by_id(15),
+                @@sales_engine.item_repository.find_by_id(15),
+                @@sales_engine.item_repository.find_by_id(16)
+                                                              ]
 
     starter_length = @@sales_engine.invoice_item_repository.data.length
 
@@ -146,7 +149,7 @@ class IntegrationTest < Minitest::Test
 
     assert_equal merchant.id, invoice.merchant_id
     assert_equal customer.id, invoice.customer_id
-    assert_equal starter_length + 3, @@sales_engine.invoice_item_repository.data.length
+    assert_equal starter_length + 2, @@sales_engine.invoice_item_repository.data.length
   end
 
   def test_you_can_charge_an_invoice
@@ -162,41 +165,33 @@ class IntegrationTest < Minitest::Test
   end
 
   def test_you_can_find_favorite_customer_from_merchant
-    merchant = @@sales_engine.merchant_repository.find_by_name "Terry-Moore"
-    customer_names =
-                    [["Jayme", "Hammes"], ["Elmer", "Konopelski"], ["Eleanora", "Kling"],
-                    ["Friedrich", "Rowe"], ["Orion", "Hills"], ["Lambert", "Abernathy"]]
-
-    customer = merchant.favorite_customer
-    name_includes = customer_names.any? do |first_name, last_name|
-                    first_name == customer.first_name && last_name == customer.last_name
-                  end
-    assert name_includes
+    merchant = @@sales_engine.merchant_repository.find_by_id 1
+    assert_equal 'Parker Daugherty', merchant.favorite_customer.name
   end
 
   def test_merchant_finds_pending_invoices
-    merchant = @@sales_engine.merchant_repository.find_by_name "Parisian Group"
+    merchant = @@sales_engine.merchant_repository.find_by_id 5
     customers = merchant.customers_with_pending_invoices
     customers_last_name = customers.map { |customer| customer.last_name  }
 
-    assert_equal 4, customers.count
-    assert_includes(customers_last_name,'Ledner')
+    assert_equal 2, customers.count
+    assert_includes(customers_last_name,'Baumbach')
   end
 
   def test_merchant_repo_finds_most_revenue
     most = @@sales_engine.merchant_repository.most_revenue(3)
-    assert_equal "Dicki-Bednar", most.first.name
-    assert_equal "Okuneva, Prohaska and Rolfson", most.last.name
+    assert_equal "Bechtelar, Jones and Stokes", most.first.name
+    assert_equal "Reynolds Inc", most.last.name
   end
 
   def test_merchant_repo_finds_most_items
     most = @@sales_engine.merchant_repository.most_items(5)
-    assert_equal "Kassulke, O'Hara and Quitzon", most.first.name
-    assert_equal "Daugherty Group", most.last.name
+    assert_equal "Sipes LLC", most.first.name
+    assert_equal "Zemlak, Volkman and Haley", most.last.name
   end
 
   def test_merchant_repo_finds_revenue_for_date
-    date = Date.parse("Tue, 20 Mar 2012")
-    assert_equal BigDecimal.new("2549722.91") , @@sales_engine.merchant_repository.revenue(date)
+    date = Date.parse("2012-03-27")
+    assert_equal BigDecimal.new("43164.97") , @@sales_engine.merchant_repository.revenue(date)
   end
 end
