@@ -233,4 +233,11 @@ class IntegrationTest < Minitest::Test
 
     assert_equal BigDecimal.new('24742.51'), merchant.revenue(date_1..date_2)
   end
+
+  def test_if_finds_pending_invoices
+    cust = @@sales_engine.customer_repository.find_by_id 17
+    pending = cust.pending_invoices
+    assert_equal 3, pending.size
+    assert_instance_of Invoice, pending.first
+  end
 end
