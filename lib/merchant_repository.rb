@@ -24,10 +24,6 @@ class MerchantRepository < Repository
     sales_engine.find_revenue_from_merchant(invoices)
   end
 
-  def successful_trans_from_invoice?(id)
-    sales_engine.successful_trans_from_invoice?(id)
-  end
-
   def pending_trans_from_invoice?(id)
     sales_engine.pending_trans_from_invoice?(id)
   end

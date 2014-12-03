@@ -23,9 +23,11 @@ class Merchant
 
   def revenue(date = nil)
     if date
-      find_revenue_with_date(date)/100 unless find_revenue_with_date(date).nil?
+      revenue = find_revenue_with_date(date)
+      revenue/100 unless revenue.nil?
     else
-      (find_revenue / 100) unless find_revenue.nil?
+      rev = find_revenue
+      (rev / 100) unless rev.nil?
     end
   end
 
@@ -56,7 +58,7 @@ class Merchant
   end
 
   def successful_invoices
-    invoices.select { |iv| repository.successful_trans_from_invoice?(iv.id) }
+    invoices.select { |iv| iv.successful_transactions? }
   end
 
   def pending_invoices

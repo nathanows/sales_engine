@@ -17,6 +17,10 @@ class Invoice
     @repository  = parent
   end
 
+  def successful_transactions?
+    @successful ||= transactions.any? { |trans| trans.result == "success" }
+  end
+
   def transactions
     repository.find_transactions_from(id)
   end
