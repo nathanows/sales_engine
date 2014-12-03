@@ -142,6 +142,14 @@ class SalesEngine
     invoices.map { |invoice| invoice_repository.find_quantity_from(invoice) }
   end
 
+  def find_quantity_from_customer(invoices)
+    invoices.map { |inv| invoice_repository.find_quantity_from(inv) }
+  end
+
+  def find_revenue_from_customer(invoices)
+    invoices.map { |inv| invoice_repository.find_revenue_from(inv) }
+  end
+
   def find_favorite_merchant_from_customer(id)
     merch_succesful_counts_from_cust(id).first.first
   end

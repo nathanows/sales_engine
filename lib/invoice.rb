@@ -18,7 +18,7 @@ class Invoice
   end
 
   def successful_transactions?
-    @successful ||= transactions.any? { |trans| trans.result == "success" }
+    transactions.any? { |trans| trans.result == "success" }
   end
 
   def transactions
