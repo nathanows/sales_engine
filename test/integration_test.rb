@@ -194,4 +194,33 @@ class IntegrationTest < Minitest::Test
     date = Date.parse("2012-03-27")
     assert_equal BigDecimal.new("43164.97") , @@sales_engine.merchant_repository.revenue(date)
   end
+
+  def test_merchant_can_return_all_revenue_by_date
+    dates_by_rev = @@sales_engine.merchant_repository.dates_by_revenue
+    assert_instance_of Date, dates_by_rev.first
+    assert_equal Date.parse('2012-3-13'), dates_by_rev.first
+  end
+
+  def test_merchant_can_return_limited_revenue_by_date
+    dates_by_rev = @@sales_engine.merchant_repository.dates_by_revenue(5)
+    assert_instance_of Date, dates_by_rev.first
+    assert_equal 5, dates_by_rev.size
+    assert_equal Date.parse('2012-3-13'), dates_by_rev.first
+  end
+
+  def test_it_can_find_revenue_for_date_range_repo
+    date_1 = Date.parse("2012-03-21")
+    date_2 = Date.parse("2012-03-23")
+    revenue = @@sales_engine.merchant_repository.revenue(date_1..date_2)
+
+    assert_equal BigDecimal.new('192155.66'), revenue
+  end
+
+  def test_it_can_find_revenue_for_date_range_repo
+    date_1 = Date.parse("2012-03-10")
+    date_2 = Date.parse("2012-03-30")
+    merchant = @@sales_engine.merchant_repository.find_by_name("Dicki-Bednar")
+
+    assert_equal BigDecimal.new('24742.51'), merchant.revenue(date_1..date_2)
+  end
 end
