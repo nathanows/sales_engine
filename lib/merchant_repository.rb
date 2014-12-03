@@ -37,7 +37,9 @@ class MerchantRepository < Repository
   end
 
   def most_items(x)
-    remove_nil_items.sort_by { |merchant| merchant.most_quantity }.reverse.first(x)
+    remove_nil_items.sort_by {
+      |merchant| merchant.most_quantity
+    }.reverse.first(x)
   end
 
   def remove_nil_items

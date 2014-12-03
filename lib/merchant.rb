@@ -32,9 +32,10 @@ class Merchant
   end
 
   def favorite_customer
-    invoices_to_customers(successful_invoices).each_with_object(Hash.new(0)) do |customer, count|
-      count[customer] += 1
-    end.max_by { |key, value| value }.first
+    invoices_to_customers(successful_invoices)
+      .each_with_object(Hash.new(0)) do |customer, count|
+        count[customer] += 1
+      end.max_by { |key, value| value }.first
   end
 
   def customers_with_pending_invoices

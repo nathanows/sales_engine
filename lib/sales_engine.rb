@@ -14,12 +14,12 @@ class SalesEngine
               :invoice_repository,
               :invoice_item_repository,
               :transaction_repository,
-              :data_source
+              :source
 
   DATA_PATH = File.expand_path('../..', __FILE__)
 
   def initialize(data_source = File.join(DATA_PATH,'data'))
-    @data_source = data_source
+    @source = data_source
     @customer_repository
     @merchant_repository
     @item_repository
@@ -29,12 +29,12 @@ class SalesEngine
   end
 
   def startup
-    @customer_repository     = CSVParser.parse('customers.csv', self, data_source)
-    @merchant_repository     = CSVParser.parse('merchants.csv', self, data_source)
-    @item_repository         = CSVParser.parse('items.csv', self, data_source)
-    @invoice_repository      = CSVParser.parse('invoices.csv', self, data_source)
-    @invoice_item_repository = CSVParser.parse('invoice_items.csv', self, data_source)
-    @transaction_repository  = CSVParser.parse('transactions.csv', self, data_source)
+    @customer_repository     = CSVParser.parse('customers.csv',self,source)
+    @merchant_repository     = CSVParser.parse('merchants.csv',self,source)
+    @item_repository         = CSVParser.parse('items.csv',self,source)
+    @invoice_repository      = CSVParser.parse('invoices.csv',self,source)
+    @invoice_item_repository = CSVParser.parse('invoice_items.csv',self,source)
+    @transaction_repository  = CSVParser.parse('transactions.csv',self,source)
     self
   end
 
@@ -98,9 +98,13 @@ class SalesEngine
     end.flatten
   end
 
+  def merch_from_trans(trans)
+    find_invoice_from_transaction(trans.invoice_id).merchant_id
+  end
+
   def merch_succesful_from_cust(customer_id)
     successful_trans_from_customer(customer_id).map do |trans|
-      find_merchant_from_invoice(find_invoice_from_transaction(trans.invoice_id).merchant_id)
+      find_merchant_from_invoice(merch_from_trans(trans))
     end.flatten
   end
 
