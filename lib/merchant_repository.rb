@@ -32,6 +32,18 @@ class MerchantRepository < Repository
     sales_engine.find_invoice_customers(invoices)
   end
 
+  def find_success_invoices
+    data.map { |merchant| merchant.successful_invoices }.flatten
+  end
+
+  def dates_by_revenue(x = 0)
+    grouped = Hash.new(0)
+    find_success_invoices.each { |iv|
+      grouped[iv.created_at] += sales_engine.find_revenue_from_invoice(iv)
+    }
+    grouped.sort_by {|k,v| -v }[0..(x-1)].map { |pair| pair[0] }
+  end
+
   def most_revenue(x)
     remove_nil_revenue.sort_by { |merchant| merchant.revenue }.reverse.first(x)
   end

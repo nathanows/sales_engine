@@ -47,7 +47,13 @@ class Merchant
 
   def successful_invoices(date = nil)
     succ_invoices = invoices.select { |iv| iv.successful_transactions? }
-    date ? succ_invoices.select { |iv| iv.created_at == date} : succ_invoices
+    if date.is_a? Range
+       succ_invoices.select { |iv| date.include?(iv.created_at)}
+    elsif date
+       succ_invoices.select { |iv| iv.created_at == date }
+    else
+      succ_invoices
+    end
   end
 
   def pending_invoices

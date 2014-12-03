@@ -138,6 +138,10 @@ class SalesEngine
     invoices.map { |invoice| invoice_repository.find_revenue_from(invoice) }
   end
 
+  def find_revenue_from_invoice(invoice)
+    invoice_repository.find_revenue_from(invoice)
+  end
+
   def find_quantity_from_merchant(invoices)
     invoices.map { |invoice| invoice_repository.find_quantity_from(invoice) }
   end
