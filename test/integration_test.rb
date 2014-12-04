@@ -244,6 +244,6 @@ class IntegrationTest < Minitest::Test
   def test_if_finds_days_since_last_activity
     cust = @@sales_engine.customer_repository.find_by_id 17
     days = cust.days_since_activity
-    assert_equal 981, days
+    assert_equal 982, days
   end
 end
