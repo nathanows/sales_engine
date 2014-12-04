@@ -48,4 +48,9 @@ class Customer
   def pending_invoices
     invoices.select { |invoice| !invoice.successful_transactions? } || []
   end
+
+  def days_since_activity
+    (Date.today - transactions.max_by { |trans|
+                  trans.updated_at}.updated_at).to_i
+  end
 end

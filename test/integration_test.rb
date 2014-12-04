@@ -240,4 +240,10 @@ class IntegrationTest < Minitest::Test
     assert_equal 3, pending.size
     assert_instance_of Invoice, pending.first
   end
+
+  def test_if_finds_days_since_last_activity
+    cust = @@sales_engine.customer_repository.find_by_id 17
+    days = cust.days_since_activity
+    assert_equal 981, days
+  end
 end
