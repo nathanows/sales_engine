@@ -37,4 +37,28 @@ class CustomerRepository < Repository
   def find_favorite_merchant_from(id)
     sales_engine.find_favorite_merchant_from_customer(id)
   end
+
+  def most_items
+    remove_nil_items.sort_by {
+      |customer| customer.most_quantity
+    }.reverse.first
+  end
+
+  def most_revenue
+    remove_nil_items.sort_by {
+      |customer| customer.most_revenue
+    }.reverse.first
+  end
+
+  def remove_nil_items
+    data.select { |customer| !customer.most_quantity.nil? }
+  end
+
+  def find_quantity_from(invoices)
+    sales_engine.find_quantity_from_customer(invoices)
+  end
+
+  def find_revenue_from(invoices)
+    sales_engine.find_revenue_from_customer(invoices)
+  end
 end

@@ -190,6 +190,16 @@ class IntegrationTest < Minitest::Test
     assert_equal "Zemlak, Volkman and Haley", most.last.name
   end
 
+  def test_customer_repo_finds_most_items
+    most = @@sales_engine.customer_repository.most_items
+    assert_equal "Katrina Hegmann", most.name
+  end
+
+  def test_customer_repo_finds_most_revenue
+    most = @@sales_engine.customer_repository.most_revenue
+    assert_equal "Leanne Braun", most.name
+  end
+
   def test_merchant_repo_finds_revenue_for_date
     date = Date.parse("2012-03-27")
     assert_equal BigDecimal.new("43164.97") , @@sales_engine.merchant_repository.revenue(date)
@@ -222,5 +232,18 @@ class IntegrationTest < Minitest::Test
     merchant = @@sales_engine.merchant_repository.find_by_name("Dicki-Bednar")
 
     assert_equal BigDecimal.new('24742.51'), merchant.revenue(date_1..date_2)
+  end
+
+  def test_if_finds_pending_invoices
+    cust = @@sales_engine.customer_repository.find_by_id 17
+    pending = cust.pending_invoices
+    assert_equal 3, pending.size
+    assert_instance_of Invoice, pending.first
+  end
+
+  def test_if_finds_days_since_last_activity
+    cust = @@sales_engine.customer_repository.find_by_id 17
+    days = cust.days_since_activity
+    assert_equal 981, days
   end
 end

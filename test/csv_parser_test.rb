@@ -46,6 +46,6 @@ class CSVParserTest < Minitest::Test
   def test_it_can_load_transactions_to_the_correct_repository
     new_obj = CSVParser.parse('transactions.csv', self, File.join(SalesEngine::DATA_PATH, 'fixtures'))
     assert_instance_of TransactionRepository, new_obj
-    assert_equal 249, new_obj.data.length
+    assert_equal 248, new_obj.data.length
   end
 end
